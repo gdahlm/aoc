@@ -24,3 +24,7 @@ def read_file(fname):
 def run_it(fname):
     lvalues, rvalues = read_file(fname)
     return total_distance(lvalues,rvalues)
+
+
+if __name__ == "__main__":
+     print(run_it('data/input/1.txt'))
