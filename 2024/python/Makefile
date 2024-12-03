@@ -1,4 +1,4 @@
-binaries=htmlcov
+binaries=htmlcov .coverage
 
 .PHONY: clean test cover
 
