@@ -1,5 +1,6 @@
 # File handling
 
+
 def open_file(fname):
     # Returns a file handle
     try:
@@ -90,4 +91,4 @@ def task(fname, stage=1):
 
 
 if __name__ == "__main__":
-    :    print(task("input.txt", stage=2))
+    print(task("input.txt", stage=2))
