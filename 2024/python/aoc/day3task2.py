@@ -6,7 +6,7 @@ def open_file(fname):
     # Returns a file handle
     try:
         fhand = open(fname, "r")
-    except IOError as e:
+    except IOError as e:  # pragma: no cover
         exit()
     return fhand
 
@@ -47,5 +47,5 @@ def run_it(fname="data/test/3.txt"):
     return res
 
 
-if __name__ == "__main__":
-    print(run_it("data/input/3.txt"))  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
+    print(run_it("data/input/3.txt"))

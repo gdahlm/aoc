@@ -9,7 +9,7 @@ clean:
 
 
 test:
-		pytest
+		coverage run -m pytest tests
 
 coverage:
 		coverage report

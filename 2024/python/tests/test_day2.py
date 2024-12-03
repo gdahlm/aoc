@@ -62,8 +62,8 @@ def test_read_file():
 
 
 def test_compress():
-    expected = ['A', 'C', 'E', 'F']
-    assert list(compress('ABCDEF', [1,0,1,0,1,1])) == expected
+    expected = ["A", "C", "E", "F"]
+    assert list(compress("ABCDEF", [1, 0, 1, 0, 1, 1])) == expected
 
 
 def test_has_duplicates():
@@ -77,6 +77,7 @@ def test_has_unorder():
     assert has_unorder([1, 2, 3, 4, 5]) == False
     assert has_unorder([5, 4, 3, 2, 1]) == False
 
+
 def test_has_jump():
     assert has_jump([1, 2, 7, 8, 9]) == True
     assert has_jump([9, 7, 6, 2, 1]) == True
@@ -86,11 +87,11 @@ def test_has_jump():
 def test_check_line():
     assert True
     assert check_line([7, 6, 4, 2, 1]) == True
-    assert check_line( [1, 3, 6, 7, 9]) == True
-    assert check_line( [1, 2, 7, 8, 9]) == False
-    assert check_line( [9, 7, 6, 2, 1]) == False
-    assert check_line( [1, 3, 2, 4, 5]) == False
-    assert check_line( [8, 6, 4, 4, 1]) == False
+    assert check_line([1, 3, 6, 7, 9]) == True
+    assert check_line([1, 2, 7, 8, 9]) == False
+    assert check_line([9, 7, 6, 2, 1]) == False
+    assert check_line([1, 3, 2, 4, 5]) == False
+    assert check_line([8, 6, 4, 4, 1]) == False
 
 
 def test_fix_iter():
@@ -98,12 +99,16 @@ def test_fix_iter():
 
 
 def test_is_fixable():
-    assert is_fixable([7, 6, 4, 2, 1]) == True # Safe without removing any level.
-    assert is_fixable([1, 3, 6, 7, 9]) == True # Safe without removing any level.
-    assert is_fixable([1, 3, 2, 4, 5]) == True # Safe by removing the second level, 3.
-    assert is_fixable([8, 6, 4, 4, 1]) == True # Safe by removing the third level, 4.
-    assert is_fixable([1, 2, 7, 8, 9]) == False  # Unsafe regardless of which level is removed
-    assert is_fixable([9, 7, 6, 2, 1]) == False  # Unsafe regardless of which level is removed.
+    assert is_fixable([7, 6, 4, 2, 1]) == True  # Safe without removing any level.
+    assert is_fixable([1, 3, 6, 7, 9]) == True  # Safe without removing any level.
+    assert is_fixable([1, 3, 2, 4, 5]) == True  # Safe by removing the second level, 3.
+    assert is_fixable([8, 6, 4, 4, 1]) == True  # Safe by removing the third level, 4.
+    assert (
+        is_fixable([1, 2, 7, 8, 9]) == False
+    )  # Unsafe regardless of which level is removed
+    assert (
+        is_fixable([9, 7, 6, 2, 1]) == False
+    )  # Unsafe regardless of which level is removed.
 
 
 def test_task():
