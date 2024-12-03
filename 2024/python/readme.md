@@ -2,11 +2,14 @@
 
 # Directory Structure:
 
-./aoc Python code
-./aoc/$day-$stage.py
+`aoc` Python code
+`tests` Tests
+`data/testing` test input data from AoC stories
+`data/input` input files from AoC
 
-
-# Python Venv setup
-python3.13 -m venv /Users/gdahlman/.venv/aoc24
-source /Users/gdahlman/.venv/aoc24/bin/activate
+# Python venv setup
+```
+python3.13 -m venv ~/.venv/aoc24
+source    ~/.venv/aoc24/bin/activate
 pip install -r requirements.txt
+```
