@@ -1,16 +1,11 @@
 
 def similarity(left,right):
-    pass
-
-def total_distance(left, right):
     res = 0
-    left.sort()
-    right.sort()
-    for index in range(len(left)):
-        res += distance(left[index], right[index])
+    items = set(left).intersection(set(right))
+    for item in items:
+        res += left.count(item) * item * right.count(item)
 
     return res
-
 
 def read_file(fname):
     with open(fname) as f:
@@ -26,7 +21,7 @@ def read_file(fname):
 
 def run_it(fname):
     lvalues, rvalues = read_file(fname)
-    return total_distance(lvalues, rvalues)
+    return similarity(lvalues, rvalues)
 
 
 if __name__ == "__main__":

@@ -21,6 +21,5 @@ def test_read_file():
     assert rres == [4,3,5,3,9,3]
 
 def test_run_it():
-    #res = run_it('data/test/1.txt')
-    #assert res == 11
-    assert True
+    res = run_it('data/test/1.txt')
+    assert res == 31
