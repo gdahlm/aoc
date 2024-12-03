@@ -30,4 +30,4 @@ def run_it(fname):
 
 
 if __name__ == "__main__":
-    print(run_it("data/input/1.txt")) # pragma: no cover
+    print(run_it("data/input/1.txt"))  # pragma: no cover

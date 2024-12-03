@@ -1,11 +1,11 @@
-
-def similarity(left,right):
+def similarity(left, right):
     res = 0
     items = set(left).intersection(set(right))
     for item in items:
         res += left.count(item) * item * right.count(item)
 
     return res
+
 
 def read_file(fname):
     with open(fname) as f:
@@ -25,4 +25,4 @@ def run_it(fname):
 
 
 if __name__ == "__main__":
-    print(run_it("data/input/1.txt")) # pragma: no cover
+    print(run_it("data/input/1.txt"))  # pragma: no cover

@@ -1,5 +1,6 @@
 import re
 
+
 # File handling
 def open_file(fname):
     # Returns a file handle
@@ -10,17 +11,19 @@ def open_file(fname):
         exit()
     return fhand
 
+
 def find_matches(line):
     pattern = r"mul\(\d{1,3}\,\d{1,3}\)"
-    return re.findall(pattern,line)
+    return re.findall(pattern, line)
+
 
 def clean_matches(seq):
     res = []
     clean_pattern = r"\d{1,3}\,\d{1,3}"
     for item in seq:
-        values = re.findall(clean_pattern,item)
-        lval, rval = values[0].split(',')
-        res.append((int(lval),int(rval)))
+        values = re.findall(clean_pattern, item)
+        lval, rval = values[0].split(",")
+        res.append((int(lval), int(rval)))
     return res
 
 
@@ -37,4 +40,4 @@ def run_it(fname="data/test/3.txt"):
 
 
 if __name__ == "__main__":
-    print(run_it("data/input/3.txt")) # pragma: no cover
+    print(run_it("data/input/3.txt"))  # pragma: no cover
