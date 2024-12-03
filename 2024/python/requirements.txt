@@ -4,3 +4,4 @@ pandas
 black
 notebook
 pytest
+coverage
