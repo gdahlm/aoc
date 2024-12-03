@@ -1,17 +1,19 @@
-# File handling
+"""AoC day 2 tasks 1 and 2"""
+import sys
 
 
 def open_file(fname):
-    # Returns a file handle
+    """Returns a file handle"""
     try:
-        fhand = open(fname, "r")
-    except IOError as e:  # pragma: no cover
-        exit()
+        fhand = open(fname, "r", encoding="utf-8")
+    except IOError:  # pragma: no cover
+        sys.exit()
     return fhand
 
 
 def read_file(fname):
-    fhand = file_handle = open_file(fname)
+    """Returns a generator to read file line by line"""
+    fhand = open_file(fname)
     for content in fhand:
         if any(element.isdigit() for element in content):
             seq = [int(x) for x in content.split()]
@@ -22,6 +24,7 @@ def read_file(fname):
 
 
 def compress(data, selectors):
+    """from the itertools docs, just to avoid another import"""
     # compress('ABCDEF', [1,0,1,0,1,1]) → A C E F
     return (datum for datum, selector in zip(data, selectors) if selector)
 
@@ -30,17 +33,21 @@ def compress(data, selectors):
 
 
 def has_duplicates(seq):
+    """Returns True if the sequence has duplicates"""
     return len(seq) != len(set(seq))
 
 
 def has_unorder(seq):
+    """Returns True if there is mixed assending and desending order"""
     if seq[0] < seq[-1]:
         return seq != sorted(seq)
     elif seq[0] > seq[-1]:
         return seq != sorted(seq, reverse=True)
+    return None
 
 
 def has_jump(seq):
+    """Returns True if there is a jump > 3 for adjacent elements"""
     for index in range(1, len(seq)):
         jump = abs(seq[index - 1] - seq[index])
         if jump > 3:
@@ -49,6 +56,7 @@ def has_jump(seq):
 
 
 def check_line(seq):
+    """Runs the test logic"""
     if has_duplicates(seq) or has_unorder(seq) or has_jump(seq):
         return False
     return True
@@ -58,8 +66,8 @@ def check_line(seq):
 
 
 def fix_iter(seq):
-    # Returns a generator that will drop one element in a list across the entire list
-    # list(fix_iter(range(3))) -> [[1, 2], [0, 2], [0, 1]]
+    """Returns a generator that will drop one element in a list across the entire list
+    list(fix_iter(range(3))) -> [[1, 2], [0, 2], [0, 1]]"""
     for index in range(len(seq)):
         selectors = [1 for x in seq]
         selectors[index] = 0
@@ -67,17 +75,16 @@ def fix_iter(seq):
 
 
 def is_fixable(seq):
+    """Returns True if the sequence is fixable"""
     for tseq in fix_iter(seq):
         if check_line(tseq):
             return True
     return False
 
 
-# Core task
-
 
 def task(fname, stage=1):
-    #
+    """Runs the core task"""
     res = 0
     lines = read_file(fname)
     for line in lines:

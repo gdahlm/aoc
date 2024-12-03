@@ -1,23 +1,24 @@
+"""Advent of Code 2024 Day 3 task 1"""
 import re
+import sys
 
-
-# File handling
 def open_file(fname):
-    # Returns a file handle
+    """Returns a file handle"""
     try:
-        fhand = open(fname, "r")
-    except IOError as e:  # pragma: no cover
-        logger.error("IO Error:", e)
-        exit()
+        fhand = open(fname, "r",encoding="utf-8")
+    except IOError:  # pragma: no cover
+        sys.exit()
     return fhand
 
 
 def find_matches(line):
+    """Matches the pattern mul(n,n) with len(n) <= 3"""
     pattern = r"mul\(\d{1,3}\,\d{1,3}\)"
     return re.findall(pattern, line)
 
 
 def clean_matches(seq):
+    """Convert to (n,n)"""
     res = []
     clean_pattern = r"\d{1,3}\,\d{1,3}"
     for item in seq:
@@ -28,6 +29,7 @@ def clean_matches(seq):
 
 
 def run_it(fname="data/test/3.txt"):
+    """runs the task"""
     res = 0
     fhand = open_file(fname)
     for line in fhand:
