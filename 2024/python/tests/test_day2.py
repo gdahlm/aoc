@@ -1,4 +1,4 @@
-from aoc.day3task1 import (
+from aoc.day2 import (
     open_file,
     read_file,
     compress,
@@ -11,6 +11,7 @@ from aoc.day3task1 import (
     task,
 )
 
+test_file = "data/test/2.txt"
 
 # Test data
 SAFE = [
@@ -35,41 +36,76 @@ UNSAFE2 = [
 ]
 
 
-def open_file():
+def test_open_file():
+    expected = [
+        "7 6 4 2 1\n",
+        "1 2 7 8 9\n",
+        "9 7 6 2 1\n",
+        "1 3 2 4 5\n",
+        "8 6 4 4 1\n",
+        "1 3 6 7 9\n",
+    ]
+    res = list(open_file(test_file))
+    assert res == expected
+
+
+def test_read_file():
+    expected = [
+        [7, 6, 4, 2, 1],
+        [1, 2, 7, 8, 9],
+        [9, 7, 6, 2, 1],
+        [1, 3, 2, 4, 5],
+        [8, 6, 4, 4, 1],
+        [1, 3, 6, 7, 9],
+    ]
+    assert list(read_file(test_file)) == expected
+
+
+def test_compress():
+    expected = ['A', 'C', 'E', 'F']
+    assert list(compress('ABCDEF', [1,0,1,0,1,1])) == expected
+
+
+def test_has_duplicates():
+    assert has_duplicates([8, 6, 4, 4, 1]) == True
+    assert has_duplicates([8, 6, 4, 5, 1]) == False
+
+
+def test_has_unorder():
+    assert has_unorder([1, 3, 2, 4, 5]) == True
+    assert has_unorder([8, 6, 4, 5, 1]) == True
+    assert has_unorder([1, 2, 3, 4, 5]) == False
+    assert has_unorder([5, 4, 3, 2, 1]) == False
+
+def test_has_jump():
+    assert has_jump([1, 2, 7, 8, 9]) == True
+    assert has_jump([9, 7, 6, 2, 1]) == True
+    assert has_jump([7, 6, 4, 2, 1]) == False
+
+
+def test_check_line():
     assert True
+    assert check_line([7, 6, 4, 2, 1]) == True
+    assert check_line( [1, 3, 6, 7, 9]) == True
+    assert check_line( [1, 2, 7, 8, 9]) == False
+    assert check_line( [9, 7, 6, 2, 1]) == False
+    assert check_line( [1, 3, 2, 4, 5]) == False
+    assert check_line( [8, 6, 4, 4, 1]) == False
 
 
-def read_file():
-    assert True
+def test_fix_iter():
+    assert list(fix_iter(range(3))) == [[1, 2], [0, 2], [0, 1]]
 
 
-def compress():
-    assert True
+def test_is_fixable():
+    assert is_fixable([7, 6, 4, 2, 1]) == True # Safe without removing any level.
+    assert is_fixable([1, 3, 6, 7, 9]) == True # Safe without removing any level.
+    assert is_fixable([1, 3, 2, 4, 5]) == True # Safe by removing the second level, 3.
+    assert is_fixable([8, 6, 4, 4, 1]) == True # Safe by removing the third level, 4.
+    assert is_fixable([1, 2, 7, 8, 9]) == False  # Unsafe regardless of which level is removed
+    assert is_fixable([9, 7, 6, 2, 1]) == False  # Unsafe regardless of which level is removed.
 
 
-def has_duplicates():
-    assert True
-
-
-def has_unorder():
-    assert True
-
-
-def has_jump():
-    assert True
-
-
-def check_line():
-    assert True
-
-
-def fix_iter():
-    assert True
-
-
-def is_fixable():
-    assert True
-
-
-def task():
-    assert True
+def test_task():
+    assert task(test_file, 1) == 2
+    assert task(test_file, 2) == 4

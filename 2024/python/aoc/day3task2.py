@@ -7,7 +7,6 @@ def open_file(fname):
     try:
         fhand = open(fname, "r")
     except IOError as e:
-        logger.error("IO Error:", e)
         exit()
     return fhand
 
