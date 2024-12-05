@@ -5,3 +5,4 @@ black
 notebook
 pytest
 coverage
+pylint

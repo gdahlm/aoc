@@ -6,14 +6,14 @@ import sys
 def open_file(fname):
     """Opens the file and returns a file handle, not robust but easy for thsi task"""
     try:
-        fhand = open(fname, "r")
+        fhand = open(fname, "r", encoding="utf-8")
     except IOError:  # pragma: no cover
         sys.exit()
     return fhand
 
 
 def find_matches(line):
-    """Matches the task patterns of mul(###,####) or do() or don't()"""
+    """Matches the task patterns of mul(###,###) or do() or don't()"""
     pattern = r"mul\(\d{1,3}\,\d{1,3}\)|do\(\)|don\'t\(\)"
     return re.findall(pattern, line)
 
