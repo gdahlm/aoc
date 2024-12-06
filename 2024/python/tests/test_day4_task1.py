@@ -1,4 +1,4 @@
-from aoc.day4task1 import fread_all, valid_move,find_roots,find_frontier,  run_it
+from aoc.day4task1 import fread_all, valid_move,find_roots,find_frontier, find_word, find_x_mas,  run_it
 
 
 def test_fread_all():
@@ -47,6 +47,24 @@ def test_find_frontier():
         == {((0, 1), ((0, 0), (0, 1))),
             ((1, 0), ((0, 0), (1, 0))),
             ((1, 1), ((0, 0), (1, 1)))})
+
+def test_find_word():
+    assert find_word(0, 2, ["..X...", ".SAMX.", ".A..A.", "XMAS.S", ".X...."],'XMAS',(1,1))
+
+def test_find_x_mas():
+    test = [
+    'MMMSXXMASM',
+    'MSAMXMSMSA',
+    'AMXSXMAAMM',
+    'MSAMASMSMX',
+    'XMASAMXAMM',
+    'XXAMMXXAMA',
+    'SMSMSASXSS',
+    'SAXAMASAAA',
+    'MAMMMXMMMM',
+    'MXMXAXMASX']
+
+    assert find_x_mas(test) == 9
 
 def test_run_it():
     assert True
