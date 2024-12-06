@@ -1,4 +1,4 @@
-from aoc.day5task1 import fread_all, find_middle
+from aoc.day5task1 import fread_all, find_middle, check_line, run_it, clean_data
 
 
 def test_fread_all():
@@ -17,6 +17,20 @@ def test_find_middle():
         _ = find_middle(item)
         assert item[_] == answers[index]
 
+def test_clean_data():
+    test = [
+        '1|2',
+        '3|4',
+        '',
+        '1,2,3,4'
+    ]
+    res = ({'1': '2', '3': '4'}, [['1', '2', '3', '4']])
+
+    assert clean_data(test) == res
+
+def test_check_line():
+    assert True
 
 def test_run_it():
     assert True
+    #assert test_run_it(fname) == 143

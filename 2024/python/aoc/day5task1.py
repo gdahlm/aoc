@@ -5,6 +5,7 @@ def fread_all(file_path):
         return [line.strip() for line in file_in]
 
 def find_middle(line):
+    """Find middle element of array index: (len(line[0]) - 1)//2"""
     return (len(line) - 1)//2
 
 def clean_data(input):
@@ -21,8 +22,8 @@ def clean_data(input):
             updates.append(_)
     return (rules, updates)
 
-# Find middle element of array index: (len(line[0]) - 1)//2
-
+def check_line(rules, line):
+    pass
 
 """
 test_raw = fread_all('../data/test/5.txt'
