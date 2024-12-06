@@ -37,6 +37,46 @@ def check_line(rules, line):
                  return False
      return True
 
+def find_bad(rules,line):
+     res = False
+     key_set = set(rules.keys())
+     for index in range(1,len(line)):
+         char = line[index]
+         if char in key_set:
+             if index == 0:
+                 pass
+             lset = set(line[:index])
+             rset = set(rules[char])
+             iset = lset.intersection(rset)
+             if len(iset) > 0:
+                 _ = iset.pop()
+                 res = ((index, char), (line.index(_), _))
+
+     return res
+
+def fix_line(rules,line):
+     if not check_line(rules, line):
+         ((lindex, lval), (rindex, rval)) = find_bad(rules,line)
+         line[lindex], line[rindex] = rval, lval
+     if not check_line(rules, line):
+         fix_line(rules,line)
+
+     return line
+
+def fix_lines(filename):
+
+    rules, updates = clean_data( fread_all(filename))
+    res = 0
+    for line in updates:
+         m_val = line[find_middle(line)]
+         if not check_line(rules, line):
+             _ = fix_line(rules,line)
+             m_val = line[find_middle(_)]
+             res += int(m_val)
+    return res
+
+
+
 """
 test_raw = fread_all('../data/test/5.txt'
 
