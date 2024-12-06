@@ -16,14 +16,26 @@ def clean_data(input):
             pass
         elif '|' in line:
             (left, right) =line.split('|')
-            rules[left] = right
+            if left in rules.keys():
+                rules[left].append(right)
+            else:
+                rules[left] = [right]
         else:
             _ = line.split(',')
             updates.append(_)
     return (rules, updates)
 
+
 def check_line(rules, line):
-    pass
+     key_set = set(rules.keys())
+     for index in range(1,len(line)):
+         char = line[index]
+         if char in key_set:
+            lset = set(line[:index])
+            rset = set(rules[char])
+            if len(rset.intersection(lset)) > 0:
+                 return False
+     return True
 
 """
 test_raw = fread_all('../data/test/5.txt'
@@ -34,4 +46,14 @@ trules, tupdates = clean_data( fread_all('../data/test/5.txt'))
 """
 
 def run_it(filename):
-    pass
+
+    rules, updates = clean_data( fread_all(filename))
+
+    res = 0
+    for line in updates:
+        m_val = line[find_middle(line)]
+        if check_line(rules, line):
+            res += int(m_val)
+    return res
+
+

@@ -17,20 +17,33 @@ def test_find_middle():
         _ = find_middle(item)
         assert item[_] == answers[index]
 
-def test_clean_data():
-    test = [
-        '1|2',
-        '3|4',
-        '',
-        '1,2,3,4'
-    ]
-    res = ({'1': '2', '3': '4'}, [['1', '2', '3', '4']])
 
-    assert clean_data(test) == res
+def test_clean_data():
+    test1 = ["1|2", "3|4", "", "1,2,3,4"]
+    test2 = ["1|2", "1|3", "3|4", "", "1,2,3,4"]
+    res1 = ({"1": ["2"], "3": ["4"]}, [["1", "2", "3", "4"]])
+    res2 = ({"1": ["2", "3"], "3": ["4"]}, [["1", "2", "3", "4"]])
+
+    assert clean_data(test1) == res1
+    assert clean_data(test2) == res2
+
 
 def test_check_line():
-    assert True
+    rules = {
+        "47": ["53", "13", "61", "29"],
+        "97": ["13", "61", "47", "29", "53", "75"],
+        "75": ["29", "53", "47", "61", "13"],
+        "61": ["13", "53", "29"],
+        "29": ["13"],
+        "53": ["29", "13"],
+    }
+    good = [["75", "47", "61", "53", "29"], ["97", "61", "53", "29", "13"], ["75", "29", "13"]]
+    bad = [["75", "97", "47", "61", "53"], ["61", "13", "29"], ["97", "13", "75", "29", "47"]]
+    for line in good:
+        assert check_line(rules, line) == True
+    for line in bad:
+        assert check_line(rules, line) == False
+
 
 def test_run_it():
-    assert True
-    #assert test_run_it(fname) == 143
+    assert run_it('data/test/5.txt') == 143
