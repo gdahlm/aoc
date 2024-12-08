@@ -1,4 +1,6 @@
 """AoC 2024 Day 1 Task 2"""
+
+
 def similarity(left, right):
     """Calculate the simularity as defined in the task"""
     res = 0

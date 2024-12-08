@@ -1,6 +1,8 @@
 """Advent of Code 2024 Day 3 task 2"""
+
 import re
 import sys
+
 
 # File handling
 def open_file(fname):
@@ -43,7 +45,7 @@ def run_it(fname="data/test/3.txt"):
         items = clean_matches(find_matches(line))
         for item in items:
             left, right = item
-            if left in (True,False):
+            if left in (True, False):
                 do_math = left
             elif do_math is True:
                 res += left * right

@@ -1,4 +1,6 @@
 """AoC 2024 Day 1 Task 1"""
+
+
 def distance(left, right):
     """simple distance function"""
     return abs(left - right)

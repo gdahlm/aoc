@@ -82,41 +82,41 @@ def find_frontier(r, c, ROWS, COLS, directions=all_dirs):
             res.add((masks[direction], path))
     return set(res)
 
-def find_word(r, c, board,word, mask):
+
+def find_word(r, c, board, word, mask):
     ROWS, COLS = len(board), len(board[0])
     path = []
-    res = ''
+    res = ""
     for index, letter in enumerate(word):
-        #if index == len(word)-1:
+        # if index == len(word)-1:
         #   return True
-        (r_mask,c_mask) = mask
-        r_shift, c_shift = r_mask*index, c_mask*index
-        r_new, c_new = r+r_shift, c+c_shift
-        path.append((r_new,c_new))
+        (r_mask, c_mask) = mask
+        r_shift, c_shift = r_mask * index, c_mask * index
+        r_new, c_new = r + r_shift, c + c_shift
+        path.append((r_new, c_new))
         if valid_move(r_new, c_new, ROWS, COLS):
             if board[r_new][c_new] != word[index]:
                 return False
-    for index, (row,col) in enumerate(path):
+    for index, (row, col) in enumerate(path):
         if valid_move(row, col, ROWS, COLS):
             res = res + board[row][col]
     if res == word:
-       return True
+        return True
 
     return path
 
 
-
 def find_x_mas(board):
     ROWS, COLS = len(board), len(board[0])
-    check, res  = set(['M', 'S']), 0
+    check, res = set(["M", "S"]), 0
     for r, row in enumerate(board):
-        if r > 0 and r < ROWS-1:
+        if r > 0 and r < ROWS - 1:
             for c, chars in enumerate(row):
-                if c > 0 and c < COLS -1 and board[r][c] == 'A':
-                      f = set([ board[r-1][c-1], board[r+1][c+1]])
-                      b = set([board[r+1][c-1], board[r-1][c+1]])
-                      if (check == f and check == b):
-                          res  += 1
+                if c > 0 and c < COLS - 1 and board[r][c] == "A":
+                    f = set([board[r - 1][c - 1], board[r + 1][c + 1]])
+                    b = set([board[r + 1][c - 1], board[r - 1][c + 1]])
+                    if check == f and check == b:
+                        res += 1
     return res
 
 

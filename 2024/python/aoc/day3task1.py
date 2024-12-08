@@ -1,11 +1,13 @@
 """Advent of Code 2024 Day 3 task 1"""
+
 import re
 import sys
+
 
 def open_file(fname):
     """Returns a file handle"""
     try:
-        fhand = open(fname, "r",encoding="utf-8")
+        fhand = open(fname, "r", encoding="utf-8")
     except IOError:  # pragma: no cover
         sys.exit()
     return fhand

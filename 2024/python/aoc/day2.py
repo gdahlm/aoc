@@ -1,4 +1,5 @@
 """AoC day 2 tasks 1 and 2"""
+
 import sys
 
 
@@ -80,7 +81,6 @@ def is_fixable(seq):
         if check_line(tseq):
             return True
     return False
-
 
 
 def task(fname, stage=1):
