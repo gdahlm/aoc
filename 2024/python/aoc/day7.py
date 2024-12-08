@@ -9,11 +9,10 @@ def fread_line(filename):
 
 
 def clean_data(filename="data/test/7.txt"):
-    res = []
+    """return tuples with int values"""
     for line in fread_line(filename):
         head, tail = line.split(":")
         tail = tail.split()
-        # res.append((head, tail))
         yield (int(head), [int(x) for x in tail])
 
 
@@ -52,13 +51,14 @@ def product(*iterables, repeat=1):
         yield tuple(prod)
 
 
-def ops_iter(COLS, ops):
+def ops_iter(cols, ops):
     """wrapper for product() due to some current jupyter bugs"""
-    return list(product(ops, repeat=COLS - 1))
+    return list(product(ops, repeat=cols - 1))
 
 
 # core code
 def find_it(filename="/data/test/7.txt", task=2):
+    """core function"""
     res = []
     data = list(clean_data(filename))
     ops_dict = [add_op, mul_op]
@@ -67,9 +67,9 @@ def find_it(filename="/data/test/7.txt", task=2):
 
     for line in data:
         target, arr = line
-        _, left, COLS = 0, arr[0], len(arr)
+        _, left, cols = 0, arr[0], len(arr)
 
-        ops = ops_iter(COLS, ops_dict)
+        ops = ops_iter(cols, ops_dict)
 
         for op in ops:
             total = left

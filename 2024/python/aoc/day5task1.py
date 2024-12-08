@@ -11,15 +11,15 @@ def find_middle(line):
     return (len(line) - 1) // 2
 
 
-def clean_data(input):
+def clean_data(data):
     rules = {}
     updates = []
-    for line in input:
+    for line in data:
         if line == "":
             pass
         elif "|" in line:
             (left, right) = line.split("|")
-            if left in rules.keys():
+            if left in rules:
                 rules[left].append(right)
             else:
                 rules[left] = [right]
@@ -80,15 +80,6 @@ def fix_lines(filename):
             m_val = line[find_middle(_)]
             res += int(m_val)
     return res
-
-
-"""
-test_raw = fread_all('../data/test/5.txt'
-
-
-trules, tupdates = clean_data( fread_all('../data/test/5.txt'))
-
-"""
 
 
 def run_it(filename):

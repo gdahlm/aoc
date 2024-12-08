@@ -133,11 +133,11 @@ def brute_two(filename, path):
             count += 1
     return count
 
+"""Notes
 In [300]: board = fread_all('data/test/6.txt')
      ...: cur, cur_dir, _  = init_start(board)
      ...: do_move(add_obs(board,6,3), cur, cur_dir)
 
-"""Notes
 
 board = fread_all('data/input/6.txt')
 cur, cur_dir, _  = init_start(board)
