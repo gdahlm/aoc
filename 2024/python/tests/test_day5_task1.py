@@ -62,8 +62,10 @@ def test_check_line():
     for line in bad:
         assert check_line(rules, line) == False
 
+
 def find_bad():
-    assert find_bad(rules, ["75", "97", "47", "61", "53"]) == ((1, '97'), (0, '75'))
+    assert find_bad(rules, ["75", "97", "47", "61", "53"]) == ((1, "97"), (0, "75"))
+
 
 def test_fix_line():
     assert fix_line(rules, ["75", "97", "47", "61", "53"]) == [
@@ -81,8 +83,10 @@ def test_fix_line():
         "29",
         "13",
     ]
+
+
 def test_fix_lines():
-    assert fix_lines('data/test/5.txt') == 123
+    assert fix_lines("data/test/5.txt") == 123
 
 
 def test_run_it():

@@ -72,6 +72,5 @@ def test_ops_iter():
 
 
 def test_find_it():
-    assert find_it('data/test/7.txt', task=1) == 3749
-    assert find_it('data/test/7.txt', task=2) == 11387
-
+    assert find_it("data/test/7.txt", task=1) == 3749
+    assert find_it("data/test/7.txt", task=2) == 11387
