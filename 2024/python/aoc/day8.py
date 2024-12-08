@@ -39,18 +39,6 @@ def find_antennas(board):
     return antennas
 
 
-def known_antinodes(board):
-    antinodes = {}
-    for r, row in enumerate(board):
-        for c, col in enumerate(row):
-            if col in "#":
-                if col not in antinodes.keys():
-                    antinodes[col] = [(r, c)]
-                else:
-                    antinodes[col].append((r, c))
-    return antinodes
-
-
 def double_distance(ref_point, given_point):
     """
     Finds a point twice as far away from ref_point as given_point.

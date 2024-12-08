@@ -16,7 +16,7 @@ def clean_data(filename="data/test/7.txt"):
         yield (int(head), [int(x) for x in tail])
 
 
-# These are to help with  operatior permutations
+# These are to help with operator permutations
 def cat_op(left: int, right: int) -> int:
     """Concat two ints, returning an int"""
     return int(str(left) + str(right))
