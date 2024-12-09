@@ -1,5 +1,6 @@
 2024/python/scratch
 2024/python/.coverage
 2024/python/data/input
+2024/python/.pytest_cache
 **/**/__pycache__/
-**/**/.ipynb_checkpoints/
+**/**/.ipynb_checkpoints
