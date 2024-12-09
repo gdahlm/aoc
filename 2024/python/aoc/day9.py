@@ -11,11 +11,11 @@
 
 """
 
-test_input = "2333133121414131402"
+test_input = "2333133121414131402" # pylint: disable=invalid-name
 
-test_input_expanded = "00...111...2...333.44.5555.6666.777.888899"
+test_input_expanded = "00...111...2...333.44.5555.6666.777.888899" # pylint: disable=invalid-name
 
-test_input_sorting_steps = [
+test_input_sorting_steps = [    # pylint: disable=invalid-name
     "00...111...2...333.44.5555.6666.777.888899",
     "009..111...2...333.44.5555.6666.777.88889.",
     "0099.111...2...333.44.5555.6666.777.8888..",
@@ -31,9 +31,9 @@ test_input_sorting_steps = [
     "0099811188827773336446555566..............",
 ]
 
-small_input = "12345"
+small_input = "12345" # pylint: disable=invalid-name
 
-small_input_expanded = "0..111....22222"
+small_input_expanded = "0..111....22222" # pylint: disable=invalid-name
 
 small_input_sorting_steps = [
     "0..111....22222",
@@ -68,7 +68,14 @@ def expand_disk(string: str) -> str:
         res = res + _
     return res
 
-def sort_disk(string: str) -> str:
+def calculate_checksum(string: str) -> int:
+    res = 0
+    for index, item in enumerate(string):
+        if item != '.':
+            res += int(item) * index
+    return res
+
+def sort_disk(string: str) -> str:  # pylint: disable=unused-argument
     # TODO
     pass
 
