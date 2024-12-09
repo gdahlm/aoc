@@ -10,6 +10,7 @@
 
 
 """
+from io import StringIO
 
 test_input = "2333133121414131402" # pylint: disable=invalid-name
 
@@ -46,27 +47,28 @@ small_input_sorting_steps = [
 
 
 def expand_disk(string: str) -> str:
+    sentence = StringIO()
     blocks = string[::2]
     freespace = string[1::2]
-    lenght = len(blocks)
+    lenght = max(len(blocks), len(freespace))
 
-    res = ""
     for index in range(lenght):
         f_value = None
         b_count = int(blocks[index])
         b_value = index
+
         if index < len(freespace):
             f_value = int(freespace[index])
-        b_out = str(b_value)
-        b_out = b_out * b_count
+        b_out = str(b_value) * b_count
+
         if f_value is not None:
             f_out = "." * f_value
         else:
-            f_out = ""
-        _ = b_out + f_out
+            f_out = ''
+        
+        sentence.write(  b_out + f_out)
 
-        res = res + _
-    return res
+    return sentence.getvalue()
 
 def calculate_checksum(string: str) -> int:
     res = 0
