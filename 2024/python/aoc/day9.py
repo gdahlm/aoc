@@ -11,8 +11,6 @@
 
 """
 
-import re
-from io import StringIO
 
 test_input = "2333133121414131402"  # pylint: disable=invalid-name
 
@@ -49,14 +47,22 @@ small_input_sorting_steps = [
     "022111222......",
 ]
 
+import re
+from io import StringIO
+
+def fread_all(file_path: str) -> list[str]:
+    """Return all lines from a file at once"""
+    with open(file_path, "r", encoding="utf-8") as file_in:
+        return file_in.readlines()
+
 
 def expand_disk(string: str) -> str:
     sentence = StringIO()
     blocks = string[::2]
     freespace = string[1::2]
-    lenght = max(len(blocks), len(freespace))
+    length = max(len(blocks), len(freespace))
 
-    for index in range(lenght):
+    for index in range(length):
         f_value = None
         b_count = int(blocks[index])
         b_value = index
@@ -88,13 +94,17 @@ def expand_disk_csv(string: str) -> str:
         if index < len(freespace):
             f_value = int(freespace[index])
 
-        b_value =str(b_value) + ","
-        b_out = (b_value * b_count)
-
         if f_value is not None:
             f_out = ".," * f_value
         else:
             f_out = ""
+        
+        b_out_list = []
+        for count in range(b_count):
+            b_out_list.append(str(b_value))
+            b_out_list.append(',')
+
+        b_out= ''.join(b_out_list)
 
         sentence.write(b_out + f_out)
 
@@ -110,14 +120,14 @@ def calculate_checksum(string: str) -> int:
 def calculate_checksum_csv(string: str) -> int:
     res = 0
     array = string.split(',')
+    array = [x for x in array if x !='.' and x != '']
     for index, item in enumerate(array):
-        if item != ".":
+        if item != "." or item != '':
             res += int(item) * index
     return res
 
 
 def sort_disk(string: str) -> str:  # pylint: disable=unused-argument
-    # TODO
     array = [x for x in string]
     num_pattern = re.compile(r"\d")
     free_pattern = re.compile(r"(\.+)")
@@ -141,24 +151,33 @@ def sort_disk(string: str) -> str:  # pylint: disable=unused-argument
 def sort_disk_csv(csv_string: str) -> str:  # pylint: disable=unused-argument
     # TODO
     array = csv_string.split(',')
-    num_pattern = re.compile(r"\,(\d)")
-    free_pattern = re.compile(r"\,(\.+)")
-    free_matches = re.finditer(free_pattern, string)
-    num_matches = re.finditer(num_pattern, "".join(array)[::-1])
-    length = len(array)
+    free_matches = []
+    num_matches = []
 
-    for free_match in free_matches:
-        start, end = free_match.span()
-        for index in range(start, end):
-            num_match = next(num_matches)
-            match_val = num_match.group(0)
-            _, match_index = num_match.span()
-            match_index *= -1
-            offset = length + match_index
-            if index >= offset:
+    for index, value in enumerate(array):
+        if value == '.':
+            free_matches.append(index)
+        if value.isnumeric():
+            num_matches.append(index)
+
+    length = len(array)
+    # num_matches.reverse() # Inplace reverse order
+
+    for index in free_matches:
+            num_match = num_matches.pop()
+            match_val = array[num_match]
+            if index >= num_match:
                 break
-            array[index], array[match_index] = match_val, "."
-    return "".join(array)
+            array[index], array[num_match] = match_val, "."
+    return ",".join(array)
+
+def do_it(filename):
+    data = fread_all(filename)
+    data = data[0].strip()
+    data_csv = expand_disk_csv(data)
+    data_csv_sorted = sort_disk_csv(data_csv)
+    checksum = calculate_checksum_csv(data_csv_sorted)
+    return checksum
 
 
 

@@ -16,7 +16,7 @@ def test_expand_disk():
 
     for test in expansion_tests:
         assert expand_disk(test[0]) == test[1]
-        
+
 def test_expand_disk_csv():
     expansion_tests = [
         ['233313312141413140233',
@@ -27,7 +27,7 @@ def test_expand_disk_csv():
 
     for test in expansion_tests:
         assert expand_disk_csv(test[0]) == test[1]
- 
+
 def test_calculate_checksum():
     data = '0099811188827773336446555566..............'
     res = 1928
