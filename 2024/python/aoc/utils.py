@@ -1,24 +1,26 @@
 """Collection of common utility functions"""
+from typing import List,Generator
 
-### File reading
-
-
-def fread_all(file_path):
+# File reading
+def fread_all(file_path: str) -> List[str]:
     """Return all lines from a file at once"""
     with open(file_path, "r", encoding="utf-8") as file_in:
         return file_in.readlines()
 
 
-def fread_line(file_path):
+def fread_line(file_path: str) -> Generator[str]:
     """Lazy read of file returning a generator"""
     with open(file_path, "r", encoding="utf-8") as file_in:
         yield from file_in
 
 
-### Board functions
+# Board functions
 
 
 def frontier(board, directions=None):
+    """Return points of the frontier of a point"""
+    # Closure: foo = frontier(board)
+    # foo((1,1), ['N']) -> [(0, 1)]
     rows, cols = len(board), len(board[0])
     masks = {
         # D:(r,c)
@@ -35,12 +37,14 @@ def frontier(board, directions=None):
         directions = masks.keys()
 
     def is_valid(point):
+        """Checks for OOB"""
         r, c = point
         if 0 <= r < rows and 0 <= c < cols:
             return True
         return False
 
     def points(point, directions=directions):
+        """Main function"""
         r, c = point
         res = set()
         for key in directions:
@@ -51,3 +55,7 @@ def frontier(board, directions=None):
         return list(res)
 
     return points
+
+if __name__ == "__main__":
+    print('Not a standalone program')
+    exit(1)
