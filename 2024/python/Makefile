@@ -7,7 +7,6 @@ default: test coverage
 clean:
 	rm -rf $(binaries)
 
-
 test:
 		coverage run -m pytest tests
 

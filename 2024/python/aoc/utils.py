@@ -15,8 +15,6 @@ def fread_line(file_path: str) -> Generator[str]:
 
 
 # Board functions
-
-
 def frontier(board, directions=None):
     """Return points of the frontier of a point"""
     # Closure: foo = frontier(board)

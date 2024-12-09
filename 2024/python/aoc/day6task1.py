@@ -6,8 +6,6 @@ masks = {
     ">": (0, 1),
     "^": (-1, 0),
 }
-cur = (None, None)
-visited = []
 
 
 def fread_all(file_path):
@@ -19,15 +17,15 @@ def init_start(board):
     """Returns the current location and the inital visted list"""
     for index, line in enumerate(board):
         if "^" in line:
-            cur = (index, line.index("^"))
-            return cur, "^", [list(cur)]
+            res = (index, line.index("^"))
+            return res, "^", [None, None]
 
     return False
 
 
 def valid_move(board, r, c):
-    ROWS, COLS = len(board), len(board[0])
-    if r < 0 or c < 0 or r >= ROWS or c >= COLS:
+    rows, cols = len(board), len(board[0])
+    if r < 0 or c < 0 or r >= rows or c >= cols:
         return "WIN"
     elif board[r][c] != "." and board[r][c] != "^":
         return "turn"
@@ -35,8 +33,9 @@ def valid_move(board, r, c):
     return "true"
 
 
-def move(board, cur, cur_dir, visited=[], turns=0):
-    ROWS, COLS = len(board), len(board[0])
+def move(board, cur, cur_dir, visited=None, turns=0):
+    if visited is None:
+        visited = []
     next_turn = list(masks.keys())
     r_mask, c_mask = masks[cur_dir]
     r, c = cur
@@ -66,7 +65,6 @@ def move(board, cur, cur_dir, visited=[], turns=0):
 
 
 def do_move(board, cur, cur_dir):
-    ROWS, COLS = len(board), len(board[0])
     next_turn = list(masks.keys())
     found = False
     is_cycle = False
@@ -137,25 +135,3 @@ def brute_two(filename, path):
         if do_move(add_obs(board, o_r, o_c), cur, cur_dir):
             count += 1
     return count
-
-
-"""Notes
-In [300]: board = fread_all('data/test/6.txt')
-     ...: cur, cur_dir, _  = init_start(board)
-     ...: do_move(add_obs(board,6,3), cur, cur_dir)
-
-
-board = fread_all('data/input/6.txt')
-cur, cur_dir, _  = init_start(board)
-visited = []
-move(board, cur, cur_dir, visited,turns = 0)
-
-
-
-masks = {}
-'^':(-1,0),
-'>':(0,1),
-'<':(0,-1),
-'v':(1,0)}
-
-"""

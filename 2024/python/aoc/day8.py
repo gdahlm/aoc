@@ -55,9 +55,9 @@ def double_distance(ref_point, given_point):
 
 
 def valid_point(point, board):
-    ROWS, COLS = len(board), len(board[0])
+    rows, cols = len(board), len(board[0])
     r, c = point
-    if r < 0 or c < 0 or r >= ROWS or c >= COLS:
+    if r < 0 or c < 0 or r >= rows or c >= cols:
         return False
     return True
 
@@ -80,5 +80,10 @@ def find_antinodes(antennas, board):
     return len(res)
 
 
-# rdata = [x.strip() for x in fread_line('data/input/8.txt')]
-# test_it(find_antennas(rdata), rdata)
+def main() -> None:
+    """Main function"""
+    raise NotImplementedError
+
+
+if __name__ == "__main__":
+    main()
