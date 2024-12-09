@@ -11,6 +11,8 @@
 
 """
 
+import re
+from io import StringIO
 
 test_input = "2333133121414131402"  # pylint: disable=invalid-name
 
@@ -47,8 +49,6 @@ small_input_sorting_steps = [
     "022111222......",
 ]
 
-import re
-from io import StringIO
 
 def fread_all(file_path: str) -> list[str]:
     """Return all lines from a file at once"""
@@ -98,7 +98,7 @@ def expand_disk_csv(string: str) -> str:
             f_out = ".," * f_value
         else:
             f_out = ""
-        
+
         b_out_list = []
         for count in range(b_count):
             b_out_list.append(str(b_value))
