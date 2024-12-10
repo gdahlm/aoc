@@ -49,6 +49,13 @@ small_input_sorting_steps = [
     "022111222......",
 ]
 
+t2_sorting = [
+'00...111...2...333.44.5555.6666.777.888899',
+'0099.111...2...333.44.5555.6666.777.8888..',
+'0099.1117772...333.44.5555.6666.....8888..',
+'0099.111777244.333....5555.6666.....8888..',
+'00992111777.44.333....5555.6666.....8888..',
+]
 
 def fread_all(file_path: str) -> list[str]:
     """Return all lines from a file at once"""
@@ -100,7 +107,7 @@ def expand_disk_csv(string: str) -> str:
             f_out = ""
 
         b_out_list = []
-        for count in range(b_count):
+        for _ in range(b_count):
             b_out_list.append(str(b_value))
             b_out_list.append(',')
 
@@ -160,16 +167,31 @@ def sort_disk_csv(csv_string: str) -> str:  # pylint: disable=unused-argument
         if value.isnumeric():
             num_matches.append(index)
 
-    length = len(array)
-    # num_matches.reverse() # Inplace reverse order
-
     for index in free_matches:
-            num_match = num_matches.pop()
-            match_val = array[num_match]
-            if index >= num_match:
-                break
-            array[index], array[num_match] = match_val, "."
+        num_match = num_matches.pop()
+        match_val = array[num_match]
+        if index >= num_match:
+            break
+        array[index], array[num_match] = match_val, "."
     return ",".join(array)
+
+def sort_disk_csv_first_fit(csv_string: str) -> str:  # pylint: disable=unused-argument
+    # TODO
+    array = csv_string.split(',')
+    num_matches = {}
+
+    for index, value in enumerate(array):
+        if value == '.':
+            pass
+        if value.isnumeric():
+            if value not in num_matches:
+                num_matches[value] = set()
+
+            num_matches[value].add(index)
+
+    #for index in num_matches[::-1]:
+
+    return num_matches
 
 def do_it(filename):
     data = fread_all(filename)
@@ -179,12 +201,33 @@ def do_it(filename):
     checksum = calculate_checksum_csv(data_csv_sorted)
     return checksum
 
+def first_fit(size: int, string: str):
+    free_pattern = re.compile(r"(\.+)")
+    matches = re.finditer(free_pattern, string)
+    for match in matches:
+        if len(match.group(0)) >= size:
+            start, end = match.span()
+            return start
+    return False
+
+def first_fit_arr(size: int, array: str, free_char='.'):
+    res = None
+    free_char = set(free_char)
+    length = len(array)
+    for index in range(length):
+        if array[index] not in free_char:
+            continue
+
+        found_chars = set(''.join(array[index: index + size]))
+        if found_chars.issubset(free_char):
+            return index
+
+    return None
 
 
 def main() -> None:
     """Main function"""
     raise NotImplementedError
-
 
 if __name__ == "__main__":
     main()
