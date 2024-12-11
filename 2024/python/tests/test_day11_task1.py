@@ -1,6 +1,6 @@
 """Tests for AoC 2024 Day 11"""
 import pytest
-from aoc.day11 import (  # pylint: disable=import-error
+from aoc.day11_task1 import (  # pylint: disable=import-error
     main,
     stone_action,
     do_blink,
