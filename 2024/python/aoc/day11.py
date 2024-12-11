@@ -29,7 +29,7 @@ def stone_action(stone):
     _ = int(stone) * 2024
     return str(_)
 
-def do_step(stones:str) -> str:
+def do_blink(stones:str) -> str:
     res = []
     stones_list = stones.split()
 
@@ -37,6 +37,15 @@ def do_step(stones:str) -> str:
         res.append(stone_action(stone))
     return ' '.join(res)
 
+def do_blinks(iterations: int, stones: str) -> str:
+    res = stones
+    for _ in range(iterations):
+        res = do_blink(res)
+    return res
+
+def count_stones(iterations: int, stones: str) -> str:
+    _ = do_blinks(iterations, stones)
+    return len(_.split())
 
 def main() -> None:
     """Main function"""
