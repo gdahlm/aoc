@@ -29,6 +29,15 @@ def stone_action(stone):
     _ = int(stone) * 2024
     return str(_)
 
+def do_step(stones:str) -> str:
+    res = []
+    stones_list = stones.split()
+
+    for stone in stones_list:
+        res.append(stone_action(stone))
+    return ' '.join(res)
+
+
 def main() -> None:
     """Main function"""
     raise NotImplementedError
