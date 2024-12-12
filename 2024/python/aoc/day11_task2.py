@@ -11,16 +11,21 @@
 3) stone replace with new stone, old val * 2024
 
 """
+from functools import lru_cache 
 
 def stones_to_int(stone: str)-> list[int]:
     return [int(x) for x in stone.split()]
 
+#@lru_cache(maxsize = 1024) 
+def stone_action(stone:int ):
 
-def stone_action(stone:int )-> list[int]:
+    if not isinstance(stone, int):
+        return
 
     if stone == 0:
-        return [1]
-    
+        yield 1
+        return
+
     if len(str(stone)) % 2 == 0:
         stone = str(stone)
         left = stone[0:len(stone)//2]
@@ -29,34 +34,64 @@ def stone_action(stone:int )-> list[int]:
         right = right.lstrip('0')
         if right == '':
             right = '0'
-        return [int(left), int(right)]
-    
-    return [stone*2024]
 
-def do_blink(int_stones:list[int]) -> list[int]:
-    res = []
-    for stone in int_stones:
-        res.extend(stone_action(stone))
-    return res
+        yield int(left)
+        yield int(right)
+        return
 
-def do_blinks(iterations: int, int_stones: list[int]) -> list[int]:
-    res = int_stones
+    yield stone*2024
+
+def do_blink_gen(stones):
+    if isinstance(stones, list):
+        _ = {}
+        for item in stones:
+            if item not in _:
+                _[item] = 1
+            else:
+                _[item] += 1
+        stones = _
+
+    for key in stones:
+        for _ in range(stones[key]):
+            yield from stone_action(key)
+
+def do_blinks(iterations: int, stones):
+    res = stones
     for _ in range(iterations):
-        res = do_blink(res)
+        res = do_blinks_map(res)
+
     return res
 
-def count_stones(iterations: int, int_stones: list[int]) -> int:
-    _ = do_blinks(iterations, int_stones)
-    return len(_)
+def do_blinks_map(stones):
+    found, res = {}, {}
+    if isinstance(stones, list):
+        _ = {}
+        for item in stones:
+            if item not in _:
+                _[item] = 1
+            else:
+                _[item] += 1
+        stones = _
 
-def do_it(iterations: int, stones: str):
-    int_stones = stones_to_int(stones)
-    return count_stones(iterations, int_stones)
+    blink_gen = do_blink_gen(stones)
+    for item in blink_gen:
+        if item in found:
+           found[item] +=1 
+        else:
+            found[item] = 1
 
-def main() -> None:
-    """Main function"""
-    raise NotImplementedError
+    return found
+
+
+def count_stones(iterations: int, stones) -> int:
+    sum = 0
+    res = do_blinks(iterations, stones)
+    for index in res:
+        sum += res[index]
+    return sum
+
+
 
 
 if __name__ == "__main__":
-    main()
+    pass

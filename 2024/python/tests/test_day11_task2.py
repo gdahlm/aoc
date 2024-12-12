@@ -4,7 +4,7 @@ from aoc.day11_task2 import (  # pylint: disable=import-error
     main,
     stones_to_int,
     stone_action,
-    do_blink,
+    do_blink_gen,
     do_blinks,
     count_stones,
 )
@@ -36,10 +36,11 @@ def test_stone_action():
     ]
 
     for values in input_output:
-        assert stone_action(values[0]) == values[1]
+        gen_res = stone_action(values[0])
+        assert list(gen_res) == values[1]
 
 
-def test_do_blink():
+def test_do_blink_gen():
     test_seq = [
         [125,17],
         [253000,1,7],
@@ -51,7 +52,7 @@ def test_do_blink():
     ]
     
     for index in range(len(test_seq)-1):
-        assert do_blink(test_seq[index]) == test_seq[index+1]
+        assert list(do_blink_gen(test_seq[index])) == test_seq[index+1]
 
 def test_count_stones():
     assert count_stones(25, [125,17] ) == 55312   
