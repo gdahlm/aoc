@@ -84,7 +84,7 @@ def find_frontier(board: list[str], directions: str | None=None) -> list[tuple]:
             return True
         return False
 
-    def points(point:tuple, directions: str=directions):
+    def points(point:tuple, directions: str=directions) -> list[tuple]:
         """Main function"""
         r, c = point
         res = set()
@@ -107,7 +107,7 @@ def find_trailheads(board: list) -> list[tuple]:
     return res
 
 
-def find_next_move(point: tuple, board: list[str], visited: list[tuple]| None=None):
+def find_next_move(point: tuple, board: list[str], visited: set[tuple]| None=None):
     # Closures
     frontier = find_frontier(board)
     if visited is None:
@@ -116,11 +116,17 @@ def find_next_move(point: tuple, board: list[str], visited: list[tuple]| None=No
     moves = set(frontier(point))
     moves.difference(visited)
     # TODO recursion?
+    for move in moves:
+        new_r, new_c = move
+        r, c = point
+        if board[r][c] + 1 == board[new_r][new_c]:
+            _ = find_next_move(move, board, visited)
+
 
     return res
 
 
-def find_hiking_trails(trailhead: tuple, board: list, visited=None):
+def find_hiking_trails(board: list[str], visited: set[tuple]| None=None):
     #rows, cols = len(board), len(board[0])
     if visited is None:
         visited = set()
@@ -140,10 +146,7 @@ def main() -> None:
     #TODO fake mocked up
     res = []
     board = fread_all("data/test/10.txt")
-    trailheads = find_trailheads(board)
-    for trailhead in trailheads:
-        _ =find_hiking_trails(trailhead, board)
-        print(_)
+    _ = find_hiking_trails(board)
 
     return res
 
