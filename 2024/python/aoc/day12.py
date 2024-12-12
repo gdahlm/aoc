@@ -44,9 +44,10 @@ def flood(board: list[str]):
                     neighborhood[point].add(pos)
                     queue.append((neighbor_row, neighbor_col))
 
-        for key in neighborhood:
+        for item in neighborhood.items():
+            key, values = item
             if key not in clusters:
-                clusters[key] = neighborhood[key]
+                clusters[key] = values
 
         if debug:
             for line in board:
@@ -83,7 +84,7 @@ def flood(board: list[str]):
         for key in clusters:
             total = 0
             for position in clusters[key]:
-                perimeter = len(directions) 
+                perimeter = len(directions)
                 for direction in directions:
                     new_pos = tuple_sum(position, direction)
                     if new_pos in clusters[key]:
@@ -95,8 +96,9 @@ def flood(board: list[str]):
     def get_total_cost():
         res = 0
         perimeters = find_perimeters(clusters)
-        for key in perimeters:
-            res += perimeters[key] * get_area(key)
+        for item in perimeters.items():
+            key, value = item
+            res += value * get_area(key)
         return res
 
     # Exposed vars
@@ -126,7 +128,6 @@ def solution(filename):
 def main() -> None:
     """Main function"""
     print(solution('data/input/12.txt'))
-
 
 if __name__ == "__main__":
     main()
