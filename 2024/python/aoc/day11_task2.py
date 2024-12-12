@@ -61,6 +61,7 @@ def do_blinks(iterations: int, stones):
     res = stones
     for _ in range(iterations):
         res = do_blinks_map(res)
+        print('Iteration:', _, 'Keys: ',len(res.keys()))
 
     return res
 
