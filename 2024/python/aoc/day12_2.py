@@ -2,6 +2,13 @@
 
 from collections import deque
 
+masks = [
+    ((0, -1), (-1, 0), (-1, -1)),  # L U L+U
+    ((-1, 0), (0, 1), (-1, 1)),  # U R U+R
+    ((1, 0), (0, 1), (1, 1)),  # D R D+R
+    ((1, 0), (0, -1), (1, -1)),
+]  # D L D+L
+
 
 # File reading
 def fread_all(file_path: str) -> list[str]:
@@ -30,7 +37,6 @@ def flood(board: list[str]):
                 print("queue", queue)
 
             cur_row, cur_col = queue.popleft()
-            board[cur_row][cur_col] = new_char
             for row_off, col_off in directions:
                 neighbor_row = cur_row + row_off
                 neighbor_col = cur_col + col_off
@@ -55,12 +61,25 @@ def flood(board: list[str]):
             return neighborhood
         return True
 
-    def is_valid(point: tuple) -> bool:
-        row, col = point
-        return 0 <= row < len(board) and 0 <= col < len(board[0])
-
     def tuple_sum(a: tuple, b: tuple):
-        return tuple(sum(x) for x in zip(a, b))
+        ar, ac = a
+        br, bc = b
+        r = ar + br
+        c = ac + bc
+        return (r, c)
+
+    def is_valid(point):
+        rows, cols = len(board), len(board[0])
+        r, c = point
+        if 0 <= r < rows and 0 <= c < cols:
+            return True
+        return False
+
+    def get_char(point):
+        row, col = point
+        if is_valid((row, col)):
+            return board[row][col]
+        return None
 
     def find_clusters():
         for row in range(len(board)):
@@ -93,6 +112,36 @@ def flood(board: list[str]):
             res[key] = total
         return res
 
+    def find_corners(clusters):
+        res = {}
+        for item in clusters.items():
+            total = 0
+            key, values = item
+            row, col = key
+            char = board[row][col]
+            for point in values:
+                for mask in masks:
+                    mask1, mask2, dmask = mask
+                    point1 = tuple_sum(point, mask1)
+                    point2 = tuple_sum(point, mask2)
+                    dpoint = tuple_sum(point, dmask)
+
+                    val1 = get_char(point1)
+                    val2 = get_char(point2)
+                    dval = get_char(dpoint)
+
+                    if val1 == val2 == char != dval:
+                        total += 1
+
+                    if val1 != char != val2:
+                        total += 1
+
+            if key not in res:
+                res[key] = 0
+
+            res[key] += total
+        return res
+
     def get_total_cost():
         res = 0
         perimeters = find_perimeters(clusters)
@@ -110,8 +159,61 @@ def flood(board: list[str]):
     fill.get_area = get_area
     fill.find_perimeters = find_perimeters
     fill.get_total_cost = get_total_cost
+    fill.find_corners = find_corners
+    fill.get_char = get_char
 
     return fill
+
+
+def find_corners2(clusters, board):
+    def is_valid(point):
+        rows, cols = len(board), len(board[0])
+        r, c = point
+        if 0 <= r < rows and 0 <= c < cols:
+            return True
+        return False
+
+    def tuple_sum(a: tuple, b: tuple):
+        ar, ac = a
+        br, bc = b
+        r = ar + br
+        c = ac + bc
+        return (r, c)
+
+    def get_char(point):
+        row, col = point
+        if is_valid((row, col)):
+            return board[row][col]
+        return None
+
+    res = {}
+    for item in clusters.items():
+        count = 0
+        key, values = item
+        row, col = key
+        char = board[row][col]
+        for point in values:
+            for mask in masks:
+                mask1, mask2, dmask = mask
+                point1 = tuple_sum(point, mask1)
+                point2 = tuple_sum(point, mask2)
+                dpoint = tuple_sum(point, dmask)
+
+                val1 = get_char(point1)
+                val2 = get_char(point2)
+                dval = get_char(dpoint)
+
+                if val1 == val2 == char != dval:
+                    count += 1
+
+                if val1 != char != val2:
+                    count += 1
+
+        if key not in res:
+            res[key] = 0
+
+        res[key] += count
+    return res
 
 
 def solution(filename):
@@ -125,9 +227,23 @@ def solution(filename):
     closure.find_clusters()
     return closure.get_total_cost()
 
+
+def solution2(filename):
+    data = fread_all(filename)
+    data = [x.strip() for x in data]
+    board = []
+    for line in data:
+        board.append([x for x in line])
+    del data
+    closure = flood(board)
+    closure.find_clusters()
+    return closure.find_corners(closure.clusters)
+
+
 def main() -> None:
     """Main function"""
-    print(solution('data/input/12.txt'))
+    print(solution2("data/test/12.txt"))
+
 
 if __name__ == "__main__":
     main()
