@@ -1,13 +1,12 @@
 """AoC 2024 Day12 Task 1"""
-
 from collections import deque
 
 masks = [
     ((0, -1), (-1, 0), (-1, -1)),  # L U L+U
     ((-1, 0), (0, 1), (-1, 1)),  # U R U+R
     ((1, 0), (0, 1), (1, 1)),  # D R D+R
-    ((1, 0), (0, -1), (1, -1)),
-]  # D L D+L
+    ((1, 0), (0, -1), (1, -1)), # D L D+L
+]
 
 
 # File reading
@@ -22,11 +21,9 @@ def flood(board: list[str]):
     visited = set()
     clusters = {}
 
-    def fill(point, new_char: chr = "#", debug=False):
+    def fill(point, debug=False):
         row, col = point
         cur_char = board[row][col]
-        if new_char == cur_char:
-            return board
 
         visited.add(point)
         queue = deque([point])
@@ -68,14 +65,14 @@ def flood(board: list[str]):
         c = ac + bc
         return (r, c)
 
-    def is_valid(point):
+    def is_valid(point: tuple) -> bool:
         rows, cols = len(board), len(board[0])
         r, c = point
         if 0 <= r < rows and 0 <= c < cols:
             return True
         return False
 
-    def get_char(point):
+    def get_char(point: tuple) -> chr:
         row, col = point
         if is_valid((row, col)):
             return board[row][col]
@@ -88,7 +85,7 @@ def flood(board: list[str]):
                 if point not in visited:
                     fill(point)
 
-    def get_area(point=None) -> int:
+    def get_area(point: tuple | None=None) -> int:
         area = 0
         if point is None:
             points = clusters
@@ -98,11 +95,12 @@ def flood(board: list[str]):
             area += len(clusters[item])
         return area
 
-    def find_perimeters(clusters):
+    def find_perimeters(clusters: dict):
         res = {}
-        for key in clusters:
+        for item in clusters.items():
+            key, values = item
             total = 0
-            for position in clusters[key]:
+            for position in values:
                 perimeter = len(directions)
                 for direction in directions:
                     new_pos = tuple_sum(position, direction)
@@ -112,13 +110,14 @@ def flood(board: list[str]):
             res[key] = total
         return res
 
-    def find_corners(clusters):
+    def find_corners(clusters: dict):
         res = {}
         for item in clusters.items():
-            total = 0
             key, values = item
             row, col = key
             char = board[row][col]
+            total = 0
+
             for point in values:
                 for mask in masks:
                     mask1, mask2, dmask = mask
@@ -142,7 +141,7 @@ def flood(board: list[str]):
             res[key] += total
         return res
 
-    def get_total_cost():
+    def get_total_cost() -> int:
         res = 0
         perimeters = find_perimeters(clusters)
         for item in perimeters.items():
@@ -150,7 +149,7 @@ def flood(board: list[str]):
             res += value * get_area(key)
         return res
 
-    def get_total_cost2():
+    def get_total_cost2() -> int:
         res = 0
         sides = find_corners(clusters)
         for item in sides.items():
@@ -169,11 +168,11 @@ def flood(board: list[str]):
     fill.get_total_cost = get_total_cost
     fill.get_total_cost2 = get_total_cost2
     fill.find_corners = find_corners
-    fill.get_char = get_char
 
     return fill
 
-def solution(filename):
+
+def solution(filename: str) -> int:
     data = fread_all(filename)
     data = [x.strip() for x in data]
     board = []
@@ -185,7 +184,7 @@ def solution(filename):
     return closure.get_total_cost()
 
 
-def solution2(filename):
+def solution2(filename: str) -> int:
     data = fread_all(filename)
     data = [x.strip() for x in data]
     board = []
@@ -199,8 +198,8 @@ def solution2(filename):
 
 def main() -> None:
     """Main function"""
-    print('Task1:',solution("data/input/12.txt"))
-    print('Task2:',solution2("data/input/12.txt"))
+    print("Task1:", solution("data/input/12.txt"))
+    print("Task2:", solution2("data/input/12.txt"))
 
 
 if __name__ == "__main__":
