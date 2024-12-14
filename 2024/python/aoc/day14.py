@@ -26,7 +26,7 @@ def parse_data(fname):
     return data
 
 def get_endpoints(data, board_size):
-    points = set()
+    points = []
     for item in data:
         loc, velocity = item
         cur_x, cur_y = loc.split(',')
@@ -37,28 +37,32 @@ def get_endpoints(data, board_size):
         velocity = (xvel,yvel)
 
         _ = movement(100, position, velocity, board_size)
-        print(_)
+        #print(_)
         x, y = _
 
-        points.add((x,y))
+        points.append(_)
 
     return points
 
 def score_it(points, board_size)-> int:
     board_width, board_height = board_size
     res = {'NW':0, 'NE':0, 'SE':0, 'SW': 0}
+    x_center = (board_width-1)//2
+    y_center =  (board_height-1)//2
     for point in points:
         x, y = point
-        if x == board_width//2  or y == board_height//2:
+        if x == x_center  or y == y_center:
             pass
-        elif x < board_width//2 and y < board_height//2:
+        elif x < x_center and y > y_center:
             res['NW'] +=1
-        elif x > board_width//2 and y < board_height//2:
+        elif x > x_center and y > y_center:
             res['NE'] +=1
-        elif x < board_width//2 and y > board_height//2:
+        elif x < x_center and y < y_center:
             res['SW'] +=1
-        elif x > board_width//2 and y > board_height//2:
-            res['NE'] +=1
+        elif x > x_center and y < y_center:
+            res['SE'] +=1
+        
+        #print((x,y))
     return res
 
 def main(fname='data/test/14.txt') -> None:
