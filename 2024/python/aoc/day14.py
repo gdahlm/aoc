@@ -38,7 +38,6 @@ def get_endpoints(data, board_size):
 
         _ = movement(100, position, velocity, board_size)
         #print(_)
-        x, y = _
 
         points.append(_)
 
@@ -46,6 +45,7 @@ def get_endpoints(data, board_size):
 
 def score_it(points, board_size)-> int:
     board_width, board_height = board_size
+    total = 1
     res = {'NW':0, 'NE':0, 'SE':0, 'SW': 0}
     x_center = (board_width-1)//2
     y_center =  (board_height-1)//2
@@ -61,15 +61,19 @@ def score_it(points, board_size)-> int:
             res['SW'] +=1
         elif x > x_center and y < y_center:
             res['SE'] +=1
-        
+
         #print((x,y))
-    return res
+    for item in res.items():
+        _, value = item
+        if value != 0:
+            total *= value
+    return total
 
-def main(fname='data/test/14.txt') -> None:
+def main(fname='data/input/14.txt') -> None:
     """Main function"""
-    board_size = (11, 7)
+    #board_size = (11, 7)
 
-    #board_size = (101, 103)
+    board_size = (101, 103)
     #board_width, board_height = board_size
 
     data = parse_data(fname)
