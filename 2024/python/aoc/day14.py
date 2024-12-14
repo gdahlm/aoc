@@ -25,7 +25,7 @@ def parse_data(fname):
     data = [x.strip('p=').split(' v=') for x in finput]
     return data
 
-def get_endpoints(data, board_size):
+def get_endpoints(data, board_size, steps=100):
     points = []
     for item in data:
         loc, velocity = item
@@ -36,7 +36,7 @@ def get_endpoints(data, board_size):
         position = (cur_x,cur_y)
         velocity = (xvel,yvel)
 
-        _ = movement(100, position, velocity, board_size)
+        _ = movement(steps, position, velocity, board_size)
         #print(_)
 
         points.append(_)
@@ -69,7 +69,34 @@ def score_it(points, board_size)-> int:
             total *= value
     return total
 
-def main(fname='data/input/14.txt') -> None:
+def print_points(points, board_size):
+    x_len, y_len = board_size
+    cols, rows = x_len, y_len
+    board = []
+    for row in range(rows):
+        board.append([['.'] for x in range(cols)])
+    for point in set(points):
+        col, row = point
+        board[row][col] = ['#']
+
+    for item in board:
+        print(''.join([''.join(x) for x in item]))
+
+def find_min(data, board_size, r_min=100, r_max=10000):
+    min_score = None
+    res = None
+    for steps in range(r_min, r_max):
+        endpoints = get_endpoints(data, board_size, steps)
+        score = score_it(endpoints,board_size)
+        if min_score is None:
+            min_score = score
+        if score < min_score:
+            min_score = score
+            res = steps
+
+    return res
+
+def main(fname='data/input/14.txt') -> int:
     """Main function"""
     #board_size = (11, 7)
 
@@ -82,5 +109,16 @@ def main(fname='data/input/14.txt') -> None:
 
     return sector_count
 
+
+def main2(fname='data/input/14.txt') -> int:
+    # Task 2
+    board_size = (101, 103)
+
+    data = parse_data(fname)
+    min_score = find_min(data, board_size, r_min=2000, r_max=10000)
+
+    return min_score
+
 if __name__ == "__main__":
-    print(main())
+    print('Task 1:',main())
+    print('Task 2:',main2())
