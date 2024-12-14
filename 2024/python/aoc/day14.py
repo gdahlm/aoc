@@ -4,10 +4,9 @@
 test_board_size = (11, 7)
 input_board_size = (101, 103)
 
-def fread_line(file_path: str):
-    """Lazy read of file returning a generator"""
-    with open(file_path, "r", encoding="utf-8") as file_in:
-        yield from file_in
+def fread_line(file_name: str):
+    with open(file_name, "r", encoding="utf-8") as file_in:
+        return [line.strip() for line in file_in]
 
 def movement(time_ticks: int,position: tuple, velocity: tuple, board_size:tuple) -> tuple:
     board_width, board_height = board_size
@@ -19,9 +18,8 @@ def movement(time_ticks: int,position: tuple, velocity: tuple, board_size:tuple)
     y = y % board_height
     return (x,y)
 
-def parse_data(fname):
-    finput = list(fread_line(fname))
-    finput = [x.strip() for x in finput]
+def parse_data(file_name):
+    finput = fread_line(file_name)
     data = [x.strip('p=').split(' v=') for x in finput]
     return data
 

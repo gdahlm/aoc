@@ -1,14 +1,17 @@
 """Collection of common utility functions"""
-from typing import List,Generator
 
 # File reading
-def fread_all(file_path: str) -> List[str]:
+def fread_all(file_path: str) -> list[str]:
     """Return all lines from a file at once"""
     with open(file_path, "r", encoding="utf-8") as file_in:
         return file_in.readlines()
 
+def fread_all_strip(file_path):
+    """Return all stripped lines from a file at once"""
+    with open(file_path, "r", encoding="utf-8") as file_in:
+        return [line.strip() for line in file_in]
 
-def fread_line(file_path: str) -> Generator[str]:
+def fread_line(file_path: str):
     """Lazy read of file returning a generator"""
     with open(file_path, "r", encoding="utf-8") as file_in:
         yield from file_in
