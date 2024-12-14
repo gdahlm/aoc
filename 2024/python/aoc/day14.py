@@ -1,0 +1,78 @@
+"""AoC <YEAR> <DAY> <TASK>"""
+
+# (Width (x), Height (y))
+test_board_size = (11, 7)
+input_board_size = (101, 103)
+
+def fread_line(file_path: str):
+    """Lazy read of file returning a generator"""
+    with open(file_path, "r", encoding="utf-8") as file_in:
+        yield from file_in
+
+def movement(time_ticks: int,position: tuple, velocity: tuple, board_size:tuple) -> tuple:
+    board_width, board_height = board_size
+    x_vel, y_vel = velocity
+    x, y = position
+    x += time_ticks * x_vel
+    y += time_ticks * y_vel
+    x = x % board_width
+    y = y % board_height
+    return (x,y)
+
+def parse_data(fname):
+    finput = list(fread_line(fname))
+    finput = [x.strip() for x in finput]
+    data = [x.strip('p=').split(' v=') for x in finput]
+    return data
+
+def get_endpoints(data, board_size):
+    points = set()
+    for item in data:
+        loc, velocity = item
+        cur_x, cur_y = loc.split(',')
+        cur_x, cur_y = int(cur_x), int(cur_y)
+        xvel, yvel = velocity.split(',')
+        xvel, yvel = int(xvel), int(yvel)
+        position = (cur_x,cur_y)
+        velocity = (xvel,yvel)
+
+        _ = movement(100, position, velocity, board_size)
+        print(_)
+        x, y = _
+
+        points.add((x,y))
+
+    return points
+
+def score_it(points, board_size)-> int:
+    board_width, board_height = board_size
+    res = {'NW':0, 'NE':0, 'SE':0, 'SW': 0}
+    for point in points:
+        x, y = point
+        if x == board_width//2  or y == board_height//2:
+            pass
+        elif x < board_width//2 and y < board_height//2:
+            res['NW'] +=1
+        elif x > board_width//2 and y < board_height//2:
+            res['NE'] +=1
+        elif x < board_width//2 and y > board_height//2:
+            res['SW'] +=1
+        elif x > board_width//2 and y > board_height//2:
+            res['NE'] +=1
+    return res
+
+def main(fname='data/test/14.txt') -> None:
+    """Main function"""
+    board_size = (11, 7)
+
+    #board_size = (101, 103)
+    #board_width, board_height = board_size
+
+    data = parse_data(fname)
+    endpoints = get_endpoints(data, board_size)
+    sector_count = score_it(endpoints,board_size)
+
+    return sector_count
+
+if __name__ == "__main__":
+    print(main())
