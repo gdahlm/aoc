@@ -4,11 +4,11 @@ from dataclasses import dataclass
 
 
 #File handling
-def read_file(file_name: str):
+def read_file(file_name: str) -> list[str]:
     with open(file_name, "r", encoding="utf-8") as file_in:
         return [line.strip() for line in file_in]
 
-def clean_data(filename):
+def clean_data(filename:str) -> list[list[str]]:
     raw_input = read_file(filename)
     board = []
     moves = []
@@ -20,4 +20,4 @@ def clean_data(filename):
                 board.append(line)
             case _:
                 moves.append(line)
-
+    return board, moves

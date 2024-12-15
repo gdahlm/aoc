@@ -7,7 +7,14 @@ from aoc.day15 import (  # pylint: disable=import-error
 )
 
 def test_fread_all():
-    assert len(read_file('data/test/15_small.txt')) == 10
+    """Test file reading"""
+    raw_input = read_file('data/test/15_small.txt')
+    assert len(raw_input) == 10
+    assert raw_input[1] == '#..O.O.#'
 
 def test_clean_data():
-    assert True
+    """Test file parsing"""
+    board, moves = clean_data('data/test/15_small.txt')
+    assert moves == ['<^^>>>vv<v>>v<<']
+    assert board[1] == '#..O.O.#'
+    assert len(board) == 8 and len(board[0]) == 8
