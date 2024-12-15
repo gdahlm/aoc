@@ -26,21 +26,21 @@ def test_clean_data():
     assert len(board) == 8 and len(board[0]) == 8
 
 
-def test_parse_move():
+def test_parse_move(): #pylint: disable=C0116
     # TODO
     assert parse_move(None) is None
 
 
-def test_look_ahead():
+def test_look_ahead(): #pylint: disable=C0116
     # TODO
     assert look_ahead(None, None) is None
 
 
-def test_move_boxes():
+def test_move_boxes(): #pylint: disable=C0116
     # TODO
     assert move_boxes() is None
 
 
-def test_score_it():
+def test_score_it():    #pylint: disable=C0116
     # TODO
     assert score_it() is None
