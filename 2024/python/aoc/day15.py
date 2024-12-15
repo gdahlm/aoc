@@ -5,13 +5,14 @@ from dataclasses import dataclass, field
 # Constents
 GPS_VALUE = ()
 CHARS = {
-    'robot':'@',
-    'box':'O',
-    'wall':'#',
-    'empty':'.',
+    "robot": "@",
+    "box": "O",
+    "wall": "#",
+    "empty": ".",
 }
 
 # Dataclases
+
 
 @dataclass
 class Point:
@@ -20,15 +21,19 @@ class Point:
     x: int
     y: int
 
+
 @dataclass(slots=True)
 class Robot:
     """Robot object dataclass"""
+
     x: int = field(repr=False)
     y: int = field(repr=False)
     location: tuple[int, int] = field(init=False)
     last_move: str = field(default=None)
+
     def __post_init__(self):
-        self.location = (self.x , self.y)
+        self.location = (self.x, self.y)
+
 
 # File handling
 def read_file(file_name: str) -> list[str]:
@@ -51,24 +56,45 @@ def clean_data(filename: str) -> list[list[str]]:
     return board, moves
 
 
+def tuple_sum(a: tuple, b: tuple):
+    return tuple(sum(x) for x in zip(a, b))
+
+
 def parse_move(move: chr) -> tuple[int, int]:
     """Return move mask tuple"""
     match move:
-        case "^" | 'up' | 'u':
+        case "^" | "up" | "u":
             return (-1, 0)
-        case "v" | 'down' | 'd':
+        case "v" | "down" | "d":
             return (1, 0)
-        case ">" | 'right' | 'r':
+        case ">" | "right" | "r":
             return (0, 1)
-        case "<" | 'left' | 'l':
+        case "<" | "left" | "l":
             return (0, -1)
     return None
 
 
-def look_ahead(board:list[str], location: tuple[int, int], move_mask: tuple[int, int]):
+def look_ahead(board, location, move_mask, res=None):
     """See if boxes can move"""
-    # TODO
-    return None
+    rows, cols = len(board), len(board[0])
+    if res is None:
+        res = []
+
+    next_loc = tuple_sum(location, move_mask)
+    new_row, new_col = next_loc
+    if rows >= new_row < 0 or cols >= new_col < 0:
+        return res
+
+    new_char = board[new_row][new_col]
+    res.extend(new_char)
+
+    if new_char == CHARS["wall"]:
+        return res
+
+    _ = look_ahead(board, (new_row, new_col), move_mask)
+    res.extend(_.copy())
+
+    return res
 
 
 def move_boxes():
@@ -82,11 +108,12 @@ def score_it():
     # TODO
     return None
 
+
 def find_robot(board: list[str]) -> tuple[int, int] | None:
-    char = CHARS['robot']
+    char = CHARS["robot"]
     for row_index, row in enumerate(board):
         if char in row:
-            return ((row_index, row.index(char)))
+            return (row_index, row.index(char))
 
     return None
 

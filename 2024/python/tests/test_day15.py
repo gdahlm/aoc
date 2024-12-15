@@ -28,6 +28,7 @@ def test_clean_data():
     assert len(board) == 8 and len(board[0]) == 8
 
 def test_find_robot():
+    """Locate the robot on the board"""
     test1 = [
         "########",
         "#..O.O.#",
@@ -53,25 +54,28 @@ def test_find_robot():
 
 # Dataclasses
 
-def test_Robot():
+def test_robot():
     """Test the robot dataclass"""
-    test_robot = Robot(3,5)
+    robot = Robot(3,5)
 
-    assert test_robot.__slots__ == ('x', 'y', 'location', 'last_move')
-    assert test_robot.x == 3 and test_robot.y == 5
-    assert test_robot.location == (3,5)
+    # ensure slots are enabled
+    assert robot.__slots__ == ('x', 'y', 'location', 'last_move')
+    # Test values
+    assert robot.x == 3 and robot.y == 5
+    assert robot.location == (3,5)
 
 def test_parse_move(): #pylint: disable=C0116
+    # Single char input
     assert parse_move('u') == (-1, 0)
     assert parse_move('d') == (1, 0)
     assert parse_move('l') == (0, -1)
     assert parse_move('r') == (0, 1)
-
+    # Game file chars
     assert parse_move('^') == (-1, 0)
     assert parse_move('v') == (1, 0)
     assert parse_move('<') == (0, -1)
     assert parse_move('>') == (0, 1)
-
+    # word input
     assert parse_move('up') == (-1, 0)
     assert parse_move('down') == (1, 0)
     assert parse_move('left') == (0, -1)
@@ -80,8 +84,22 @@ def test_parse_move(): #pylint: disable=C0116
 
 
 def test_look_ahead(): #pylint: disable=C0116
-    # TODO
-    assert look_ahead(None, None, None) is None
+    """return the chars along a path of travel"""
+    test_board= [
+        "########",
+        "#.@O.O.#",
+        "##..O..#",
+        "#...O..#",
+        "#.#.O..#",
+        "#...O..#",
+        "#......#",
+        "########",
+    ]
+    # Test Right, Left, Down and Up
+    assert look_ahead(test_board, (1,2), (0,1)) == ['O', '.', 'O', '.', '#']
+    assert look_ahead(test_board, (1,2), (0,-1)) == ['.', '#']
+    assert look_ahead(test_board, (1,2), (1,0)) == ['.', '.', '#']
+    assert look_ahead(test_board, (1,2), (-1,0)) == ['#']
 
 
 def test_move_boxes(): #pylint: disable=C0116
