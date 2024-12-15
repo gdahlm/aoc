@@ -2,6 +2,13 @@
 
 from dataclasses import dataclass
 
+GPS_VALUE = ()
+CHARS = {
+    'robot':'@',
+    'box':'O',
+    'wall':'#',
+    'empty':'.',
+}
 
 @dataclass
 class Point:
@@ -35,16 +42,16 @@ def clean_data(filename: str) -> list[list[str]]:
 def parse_move(move: chr) -> tuple:
     """Return move tuple"""
     match move:
-        case "^":
+        case "^" | 'up' | 'u':
             print("Up")
             return (-1, 0)
-        case "v":
+        case "v" | 'down' | 'd':
             print("Down")
             return (1, 0)
-        case ">":
+        case ">" | 'right' | 'r':
             print("Right")
             return (0, 1)
-        case "<":
+        case "<" | 'left' | 'l':
             print("Left")
             return (0, -1)
 
