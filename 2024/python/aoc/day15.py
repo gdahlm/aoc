@@ -26,13 +26,13 @@ class Point:
 class Robot:
     """Robot object dataclass"""
 
-    x: int = field(repr=False)
-    y: int = field(repr=False)
+    row: int = field(repr=False)
+    col: int = field(repr=False)
     location: tuple[int, int] = field(init=False)
     last_move: str = field(default=None)
 
     def __post_init__(self):
-        self.location = (self.x, self.y)
+        self.location = (self.row, self.col)
 
 
 # File handling
@@ -118,10 +118,19 @@ def do_move(board: list[str] | list[list[str]], location: tuple[int, int], direc
     """Do individual move"""
     if board is None:
         return None
-
-    board = board.copy()
+    cur_row, cur_col = location
+    robot = Robot(cur_row,cur_col)
+    board = board.copy() # Shallow copy
     if isinstance(board[0], str):
         board = board_to_array(board)
+
+    move_mask = parse_move(direction)
+    move_slice = look_ahead(board, (robot.row, robot.col), move_mask)
+
+    print(move_slice)
+
+    if '.' in move_slice:
+        cur_loc = location
 
     return None
 
