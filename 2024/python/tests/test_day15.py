@@ -54,6 +54,7 @@ def test_find_robot():
 # Dataclasses
 
 def test_Robot():
+    """Test the robot dataclass"""
     test_robot = Robot(3,5)
 
     assert test_robot.__slots__ == ('x', 'y', 'location', 'last_move')
@@ -61,8 +62,21 @@ def test_Robot():
     assert test_robot.location == (3,5)
 
 def test_parse_move(): #pylint: disable=C0116
-    # TODO
-    assert parse_move(None) is None
+    assert parse_move('u') == (-1, 0)
+    assert parse_move('d') == (1, 0)
+    assert parse_move('l') == (0, -1)
+    assert parse_move('r') == (0, 1)
+
+    assert parse_move('^') == (-1, 0)
+    assert parse_move('v') == (1, 0)
+    assert parse_move('<') == (0, -1)
+    assert parse_move('>') == (0, 1)
+
+    assert parse_move('up') == (-1, 0)
+    assert parse_move('down') == (1, 0)
+    assert parse_move('left') == (0, -1)
+    assert parse_move('right') == (0, 1)
+
 
 
 def test_look_ahead(): #pylint: disable=C0116
