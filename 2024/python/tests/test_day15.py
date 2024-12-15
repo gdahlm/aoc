@@ -7,8 +7,9 @@ from aoc.day15 import (  # pylint: disable=import-error
     find_robot,
     parse_move,
     look_ahead,
-    move_boxes,
+    do_move,
     score_it,
+    board_to_array,
     Robot,
 )
 
@@ -26,6 +27,14 @@ def test_clean_data():
     assert moves == ["<^^>>>vv<v>>v<<"]
     assert board[1] == "#..O.O.#"
     assert len(board) == 8 and len(board[0]) == 8
+
+def test_board_to_array():
+    test_list = [
+        'abc',
+        '123'
+    ]
+
+    assert board_to_array(test_list) == [['a', 'b', 'c'], ['1', '2', '3']]
 
 def test_find_robot():
     """Locate the robot on the board"""
@@ -102,9 +111,9 @@ def test_look_ahead(): #pylint: disable=C0116
     assert look_ahead(test_board, (1,2), (-1,0)) == []
 
 
-def test_move_boxes(): #pylint: disable=C0116
+def test_do_move(): #pylint: disable=C0116
     # TODO
-    assert move_boxes() is None
+    assert do_move(None, None, None) is None
 
 
 def test_score_it():    #pylint: disable=C0116

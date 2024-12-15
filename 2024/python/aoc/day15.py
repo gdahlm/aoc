@@ -49,11 +49,18 @@ def clean_data(filename: str) -> list[list[str]]:
         match line:
             case "":
                 pass
-            case x if "#" in line:  # pylint: disable=W0612
+            case str() if "#" in line:
                 board.append(line)
             case _:
                 moves.append(line)
     return board, moves
+
+
+def board_to_array(board:list[str]) -> list[list[chr]]:
+    res = []
+    for line in board:
+        res.append([x for x in line])
+    return res
 
 
 def tuple_sum(a: tuple, b: tuple):
@@ -98,7 +105,7 @@ def look_ahead(board, location, move_mask, res=None):
     return res
 
 
-def move_boxes():
+def do_move(board: list[str], location: tuple[int, int], direction:str):
     """Move boxes"""
     # TODO
     return None
