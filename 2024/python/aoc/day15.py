@@ -56,7 +56,7 @@ def clean_data(filename: str) -> list[list[str]]:
     return board, moves
 
 
-def board_to_array(board:list[str]) -> list[list[chr]]:
+def board_to_array(board: list[str]) -> list[list[chr]]:
     res = []
     for line in board:
         res.append([x for x in line])
@@ -105,7 +105,16 @@ def look_ahead(board, location, move_mask, res=None):
     return res
 
 
-def do_move(board: list[str], location: tuple[int, int], direction:str):
+def print_board(board: list[str] | list[list[str]]) -> None:
+    if isinstance(board[0], list) and isinstance(board[0][0], str):
+        for line in board:
+            print("".join(line))
+    elif isinstance(board[0], str):
+        for line in board:
+            print(line)
+
+
+def do_move(board: list[str], location: tuple[int, int], direction: str):
     """Move boxes"""
     # TODO
     return None
@@ -117,7 +126,7 @@ def score_it():
     return None
 
 
-def find_robot(board: list[str] | list[list[chr]] ) -> tuple[int, int] | None:
+def find_robot(board: list[str] | list[list[str]]) -> tuple[int, int] | None:
     char = CHARS["robot"]
     for row_index, row in enumerate(board):
         if char in row:
