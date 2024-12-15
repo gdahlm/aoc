@@ -86,10 +86,11 @@ def look_ahead(board, location, move_mask, res=None):
         return res
 
     new_char = board[new_row][new_col]
-    res.extend(new_char)
 
     if new_char == CHARS["wall"]:
         return res
+
+    res.extend(new_char)
 
     _ = look_ahead(board, (new_row, new_col), move_mask)
     res.extend(_.copy())

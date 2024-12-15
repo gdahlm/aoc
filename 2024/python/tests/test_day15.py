@@ -96,10 +96,10 @@ def test_look_ahead(): #pylint: disable=C0116
         "########",
     ]
     # Test Right, Left, Down and Up
-    assert look_ahead(test_board, (1,2), (0,1)) == ['O', '.', 'O', '.', '#']
-    assert look_ahead(test_board, (1,2), (0,-1)) == ['.', '#']
-    assert look_ahead(test_board, (1,2), (1,0)) == ['.', '.', '#']
-    assert look_ahead(test_board, (1,2), (-1,0)) == ['#']
+    assert look_ahead(test_board, (1,2), (0,1)) == ['O', '.', 'O', '.']
+    assert look_ahead(test_board, (1,2), (0,-1)) == ['.']
+    assert look_ahead(test_board, (1,2), (1,0)) == ['.', '.']
+    assert look_ahead(test_board, (1,2), (-1,0)) == []
 
 
 def test_move_boxes(): #pylint: disable=C0116
