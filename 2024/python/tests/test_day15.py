@@ -120,14 +120,33 @@ def test_look_ahead():  # pylint: disable=C0116
     assert look_ahead(test_board, (1, 2), (1, 0)) == [".", "."]
     assert look_ahead(test_board, (1, 2), (-1, 0)) == []
 
+def test_look_ahead_array():  # pylint: disable=C0116
+    """return the chars along a path of travel"""
+    test_board = [
+        "########",
+        "#.@O.O.#",
+        "##..O..#",
+        "#...O..#",
+        "#.#.O..#",
+        "#...O..#",
+        "#......#",
+        "########",
+    ]
+    test_board = board_to_array(test_board)
+    # Test Right, Left, Down and Up
+    assert look_ahead(test_board, (1, 2), (0, 1)) == ["O", ".", "O", "."]
+    assert look_ahead(test_board, (1, 2), (0, -1)) == ["."]
+    assert look_ahead(test_board, (1, 2), (1, 0)) == [".", "."]
+    assert look_ahead(test_board, (1, 2), (-1, 0)) == []
 
-def test_print_board_strings(capsys):
+
+def test_print_board_strings(capsys: pytest.CaptureFixture[str]):
     print_board(["abc", "123"])
     captured = capsys.readouterr()
     assert captured.out == "abc\n123\n"
 
 
-def test_print_board_array(capsys):
+def test_print_board_array(capsys: pytest.CaptureFixture[str]):
     print_board([["a", "b", "c"], ["1", "2", "3"]])
     captured = capsys.readouterr()
     assert captured.out == "abc\n123\n"

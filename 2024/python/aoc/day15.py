@@ -114,9 +114,15 @@ def print_board(board: list[str] | list[list[str]]) -> None:
             print(line)
 
 
-def do_move(board: list[str], location: tuple[int, int], direction: str):
-    """Move boxes"""
-    # TODO
+def do_move(board: list[str] | list[list[str]], location: tuple[int, int], direction: str):
+    """Do individual move"""
+    if board is None:
+        return None
+
+    board = board.copy()
+    if isinstance(board[0], str):
+        board = board_to_array(board)
+
     return None
 
 
