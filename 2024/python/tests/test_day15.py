@@ -58,8 +58,12 @@ def test_find_robot():
         "#...O..#",
         "########",
     ]
+    # list[str]
     assert find_robot(test1) == (2, 2)
     assert find_robot(test2) == (3, 4)
+    # list[list[chr]]
+    assert find_robot(board_to_array(test1)) == (2, 2)
+    assert find_robot(board_to_array(test2)) == (3, 4)
 
 # Dataclasses
 

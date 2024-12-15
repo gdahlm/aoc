@@ -117,7 +117,7 @@ def score_it():
     return None
 
 
-def find_robot(board: list[str]) -> tuple[int, int] | None:
+def find_robot(board: list[str] | list[list[chr]] ) -> tuple[int, int] | None:
     char = CHARS["robot"]
     for row_index, row in enumerate(board):
         if char in row:
