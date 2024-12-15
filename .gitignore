@@ -2,5 +2,6 @@
 2024/python/.coverage
 2024/python/data/input
 2024/python/.pytest_cache
+2024/python/tutorial.db
 **/**/__pycache__/
 **/**/.ipynb_checkpoints
