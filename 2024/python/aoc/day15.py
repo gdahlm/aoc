@@ -39,7 +39,7 @@ def clean_data(filename: str) -> list[list[str]]:
     return board, moves
 
 
-def parse_move(move: chr) -> tuple:
+def parse_move(move: chr) -> tuple[int, int]:
     """Return move mask tuple"""
     match move:
         case "^" | 'up' | 'u':
@@ -53,7 +53,7 @@ def parse_move(move: chr) -> tuple:
     return None
 
 
-def look_ahead(location: tuple, move_mask: tuple):
+def look_ahead(board:list[str], location: tuple[int, int], move_mask: tuple[int, int]):
     """See if boxes can move"""
     # TODO
     return None
@@ -68,6 +68,14 @@ def move_boxes():
 def score_it():
     """Calculate score based on 'GPS' weights"""
     # TODO
+    return None
+
+def find_robot(board: list[str]) -> tuple[int, int]:
+    char = CHARS['robot']
+    for row_index, row in enumerate(board):
+        if char in row:
+            return ((row_index, row.index(char)))
+
     return None
 
 
