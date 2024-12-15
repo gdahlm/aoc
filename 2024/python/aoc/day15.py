@@ -1,7 +1,8 @@
 """AoC 2024 Day 15 Task 1"""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
+# Constents
 GPS_VALUE = ()
 CHARS = {
     'robot':'@',
@@ -10,6 +11,8 @@ CHARS = {
     'empty':'.',
 }
 
+# Dataclases
+
 @dataclass
 class Point:
     """Generic point data object"""
@@ -17,6 +20,15 @@ class Point:
     x: int
     y: int
 
+@dataclass(slots=True)
+class Robot:
+    """Robot object dataclass"""
+    x: int = field(repr=False)
+    y: int = field(repr=False)
+    location: tuple[int, int] = field(init=False)
+    last_move: str = field(default=None)
+    def __post_init__(self):
+        self.location = (self.x , self.y)
 
 # File handling
 def read_file(file_name: str) -> list[str]:
@@ -70,7 +82,7 @@ def score_it():
     # TODO
     return None
 
-def find_robot(board: list[str]) -> tuple[int, int]:
+def find_robot(board: list[str]) -> tuple[int, int] | None:
     char = CHARS['robot']
     for row_index, row in enumerate(board):
         if char in row:

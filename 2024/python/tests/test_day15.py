@@ -9,9 +9,10 @@ from aoc.day15 import (  # pylint: disable=import-error
     look_ahead,
     move_boxes,
     score_it,
+    Robot,
 )
 
-
+# Data Handling
 def test_fread_all():
     """Test file reading"""
     raw_input = read_file("data/test/15_small.txt")
@@ -50,6 +51,14 @@ def test_find_robot():
     assert find_robot(test1) == (2, 2)
     assert find_robot(test2) == (3, 4)
 
+# Dataclasses
+
+def test_Robot():
+    test_robot = Robot(3,5)
+
+    assert test_robot.__slots__ == ('x', 'y', 'location', 'last_move')
+    assert test_robot.x == 3 and test_robot.y == 5
+    assert test_robot.location == (3,5)
 
 def test_parse_move(): #pylint: disable=C0116
     # TODO
