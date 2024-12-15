@@ -59,7 +59,10 @@ def score_it(points, board_size)-> int:
             res['SW'] +=1
         elif x > x_center and y < y_center:
             res['SE'] +=1
-
+        match point:
+            case (x,y) if x < x_center and y > y_center:
+               res['NW'] +=1 
+               
         #print((x,y))
     for item in res.items():
         _, value = item

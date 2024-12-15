@@ -1,7 +1,4 @@
-"""AoC 2024 Day 11 Part 2
-"""
-
-
+"""AoC 2024 Day 11 Part 2"""
 def blink_logic(stone):
     if stone == 0:
         return [1]
@@ -11,13 +8,11 @@ def blink_logic(stone):
         left = str_stone[: len(str_stone) // 2]
         right = str_stone[len(str_stone) // 2 :]
         return [int(left), int(right)]
-
     return [stone * 2024]
 
 
 def solution(stones, blinks):
-    memo = {}
-    count = 0
+    memo, count= {}, 0
 
     def dfs(number, iteraton):
         count = 0
@@ -31,7 +26,6 @@ def solution(stones, blinks):
         array = blink_logic(number)
         for item in array:
             count += dfs(item, iteraton- 1)
-
         memo[(number, iteraton)] = count
         return count
 
@@ -41,7 +35,7 @@ def solution(stones, blinks):
 
 
 def main():
-    return solution([6571, 0, 5851763, 526746, 23, 69822, 9, 989], 75)
+    return solution([6571, 0, 5851763, 526746, 23, 69822, 9, 989], 25)
 
 
 if __name__ == '__main__':
