@@ -40,20 +40,17 @@ def clean_data(filename: str) -> list[list[str]]:
 
 
 def parse_move(move: chr) -> tuple:
-    """Return move tuple"""
+    """Return move mask tuple"""
     match move:
         case "^" | 'up' | 'u':
-            print("Up")
             return (-1, 0)
         case "v" | 'down' | 'd':
-            print("Down")
             return (1, 0)
         case ">" | 'right' | 'r':
-            print("Right")
             return (0, 1)
         case "<" | 'left' | 'l':
-            print("Left")
             return (0, -1)
+    return None
 
 
 def look_ahead(location: tuple, move_mask: tuple):
