@@ -1,4 +1,4 @@
-"""Tests for AoC 2024 Day 12"""
+"""Tests for AoC 2024 Day 17"""
 
 # pylint: disable=E0606,C0116,W0611
 import pytest  # pylint: disable=unused-import
