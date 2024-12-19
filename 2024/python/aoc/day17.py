@@ -2,8 +2,29 @@
 
 from dataclasses import dataclass, field
 
-# pylint: disable=E0606
-# state = None #pylint: disable=C0103
+# pylint: disable=E0606,E0601
+
+
+def read_file(file_name: str) -> list[str]:
+    with open(file_name, "r", encoding="utf-8") as file_in:
+        return [line.strip() for line in file_in]
+
+
+def clean_data(filename):
+    raw_data = read_file(filename)
+    for line in raw_data:
+        if line != "":
+            _, value = line.split(": ")
+            if _[-1] == "A":
+                _a = value
+            elif _[-1] == "B":
+                _b = value
+            elif _[-1] == "C":
+                _c = value
+            elif _[-1] == "m":
+                program = value
+
+    return ([int(x) for x in program.split(",")], _a, _b, _c)
 
 
 @dataclass(slots=True)
@@ -41,7 +62,7 @@ def do_instruction(opcode: int, operand: int, state: object):
         case 0:
             # adv:
             state.pointer += 2
-            state.a = state.a // ((2 ** (combo_operands(operand, state))) % 8)
+            state.a = state.a // 2 ** combo_operands(operand, state)
         case 1:
             # bxl:
             state.pointer += 2
@@ -67,27 +88,30 @@ def do_instruction(opcode: int, operand: int, state: object):
         case 6:
             # bdv:
             state.pointer += 2
-            state.b = (state.a // (2 ** combo_operands(1, state))) % 8
+            state.b = state.a // 2 ** combo_operands(operand, state)
         case 7:
             # bdv:
             state.pointer += 2
-            state.c = (state.a // (2 ** combo_operands(1, state))) % 8
+            state.c = state.a // 2 ** combo_operands(operand, state)
+
 
 def print_vm(state):
     print(f"A:{state.a} B:{state.b} C:{state.c} Instruction Pointer: {state.pointer}")
 
+
 def run_program(program, reg_a=0, reg_b=0, reg_c=0):
     program_length = len(program)
-    program_state = MachineState(reg_a, reg_b, reg_c, 0, []) 
+    program_state = MachineState(reg_a, reg_b, reg_c, 0, [])
 
     while program_state.pointer < program_length:
         opcode = program[program_state.pointer]
-        operand = program[program_state.pointer +1] 
-        do_instruction(opcode,operand, program_state)
-
+        operand = program[program_state.pointer + 1]
+        do_instruction(opcode, operand, program_state)
     return program_state
 
 
 if __name__ == "__main__":
-
-    pass
+    
+    #input_program, a, b, c = clean_data('data/input/17.txt')
+    print(run_program([0,3,5,4,3,0], 117440, 0,0 ))
+    #print(run_program(input_program, int(a), int(b), int(c)))
