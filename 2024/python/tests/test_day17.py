@@ -9,9 +9,6 @@ from aoc.day17 import (  # pylint: disable=import-error
     run_program
 )
 
-
-
-
 def test_machine_state():
     tstate = MachineState(1, 2, 3, 20, [100, 200, 300])
     assert tstate.a == 1
@@ -58,6 +55,10 @@ def test_run_program():
 
     test_out = run_program([1,7], 0, 29,0)
     assert test_out.b == 26
+    del test_out
+
+    test_out = run_program([4,0], 0, 2024,43690)
+    assert test_out.b == 44354
     del test_out
 
 def test_print_vm():

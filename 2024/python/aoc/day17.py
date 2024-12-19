@@ -88,9 +88,6 @@ def run_program(program, reg_a=0, reg_b=0, reg_c=0):
     return program_state
 
 
-
-
-
 if __name__ == "__main__":
 
-    machine = MachineState(10, 0, 0, 0, [])
+    pass
