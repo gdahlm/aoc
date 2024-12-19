@@ -111,7 +111,22 @@ def run_program(program, reg_a=0, reg_b=0, reg_c=0):
 
 
 if __name__ == "__main__":
-    
-    #input_program, a, b, c = clean_data('data/input/17.txt')
-    print(run_program([0,3,5,4,3,0], 117440, 0,0 ))
-    #print(run_program(input_program, int(a), int(b), int(c)))
+
+    # Part 1
+    input_program, a, b, c = clean_data('data/input/17.txt')
+    print(run_program(input_program, int(a), int(b), int(c)))
+
+    # Part 2
+    # I cannot figure out a way to code this without giving away the input.
+    # But this is all one needs to udnerstand to solve it.
+    """
+    oct(A): 0o36414027 mod8:7
+    oct(A): 0o3641402 mod8:2
+    oct(A): 0o364140 mod8:0
+    oct(A): 0o36414 mod8:4
+    oct(A): 0o3641 mod8:1
+    oct(A): 0o364 mod8:4
+    oct(A): 0o36 mod8:6
+    oct(A): 0o3 mod8:3
+    oct(A): 0o0 mod8:0
+    """
