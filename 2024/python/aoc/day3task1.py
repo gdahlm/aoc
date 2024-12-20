@@ -1,17 +1,10 @@
 """Advent of Code 2024 Day 3 task 1"""
 
 import re
-import sys
 
-
-def open_file(fname):
-    """Returns a file handle"""
-    try:
-        fhand = open(fname, "r", encoding="utf-8")
-    except IOError:  # pragma: no cover
-        sys.exit()
-    return fhand
-
+def open_file(file_name: str) -> list[str]:
+    with open(file_name, "r", encoding="utf-8") as file_in:
+        return list(file_in)
 
 def find_matches(line):
     """Matches the pattern mul(n,n) with len(n) <= 3"""
