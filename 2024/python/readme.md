@@ -13,3 +13,7 @@ python3.13 -m venv ~/.venv/aoc24
 source    ~/.venv/aoc24/bin/activate
 pip install -r requirements.txt
 ```
+
+#TODO
+
+Day 15 part 2

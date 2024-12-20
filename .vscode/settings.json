@@ -1,7 +1,0 @@
-{
-    "pylint.cwd": "${fileDirname}",
-    "pylint.ignorePatterns": [
-        "R1705,R0801,C0116"
-    ],
-    "python.REPL.enableREPLSmartSend": false
-}

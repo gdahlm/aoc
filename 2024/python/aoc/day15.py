@@ -86,6 +86,8 @@ def look_ahead(board, location, move_mask, res=None):
     rows, cols = len(board), len(board[0])
     if res is None:
         res = []
+    if not isinstance(move_mask, tuple) or not isinstance(location, tuple):
+        return res
 
     next_loc = tuple_sum(location, move_mask)
     new_row, new_col = next_loc
@@ -105,6 +107,41 @@ def look_ahead(board, location, move_mask, res=None):
     return res
 
 
+def do_move(
+    board: list[str] | list[list[str]], location: tuple[int, int], direction: str
+):
+    """Do individual move"""
+    if board is None:
+        return None
+    cur_row, cur_col = location
+    robot = Robot(cur_row, cur_col)
+    board = board.copy()  # Shallow copy
+    if isinstance(board[0], str):
+        board = board_to_array(board)
+
+    move_mask = parse_move(direction)
+    move_slice = look_ahead(board, (robot.row, robot.col), move_mask)
+    # print(move_slice)
+
+    match move_slice:
+        case [] | None:
+            return board
+
+    slice_index = move_slice.index(CHARS["empty"])
+
+    if "." in move_slice:
+        dot_loc_index = move_slice.index(".")
+        # print(f"Index: {slice_index} Slice:{move_slice}")
+        # TODO
+        slice_tail = move_slice.pop(slice_index)
+        new_slice = [CHARS["empty"], CHARS["robot"]]
+        new_slice.extend(move_slice)
+        # print(f"New slice: {new_slice}")
+
+        _ = write_updates(board, location, move_mask, new_slice)
+        return find_robot(board)
+
+
 def print_board(board: list[str] | list[list[str]]) -> None:
     if isinstance(board[0], list) and isinstance(board[0][0], str):
         for line in board:
@@ -114,25 +151,30 @@ def print_board(board: list[str] | list[list[str]]) -> None:
             print(line)
 
 
-def do_move(board: list[str] | list[list[str]], location: tuple[int, int], direction: str):
-    """Do individual move"""
-    if board is None:
-        return None
-    cur_row, cur_col = location
-    robot = Robot(cur_row,cur_col)
-    board = board.copy() # Shallow copy
-    if isinstance(board[0], str):
-        board = board_to_array(board)
+def write_updates(board, location, move_mask, new_slice, index=0, res=None):
+    """write the new slice to the board"""
+    rows, cols = len(board), len(board[0])
+    if len(new_slice) == 0:
+        return board
+    if index > 0:
+        next_loc = tuple_sum(location, move_mask)
+    else:
+        next_loc = location
 
-    move_mask = parse_move(direction)
-    move_slice = look_ahead(board, (robot.row, robot.col), move_mask)
+    new_row, new_col = next_loc
+    new_char = new_slice.pop(0)
 
-    print(move_slice)
+    if rows >= new_row < 0 or cols >= new_col < 0:
+        return res
 
-    if '.' in move_slice:
-        cur_loc = location
+    board[new_row][new_col] = new_char
 
-    return None
+    if new_char == CHARS["wall"]:
+        return res
+
+    board = write_updates(board, (new_row, new_col), move_mask, new_slice, index + 1)
+
+    return board
 
 
 def score_it():
