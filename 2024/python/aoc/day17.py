@@ -113,7 +113,7 @@ def run_program(program, reg_a=0, reg_b=0, reg_c=0):
 if __name__ == "__main__":
 
     # Part 1
-    input_program, a, b, c = clean_data('data/input/17.txt')
+    input_program, a, b, c = clean_data("data/input/17.txt")
     print(run_program(input_program, int(a), int(b), int(c)))
 
     # Part 2

@@ -125,9 +125,11 @@ def solution(filename):
     closure.find_clusters()
     return closure.get_total_cost()
 
+
 def main() -> None:
     """Main function"""
-    print(solution('data/input/12.txt'))
+    print(solution("data/input/12.txt"))
+
 
 if __name__ == "__main__":
     main()

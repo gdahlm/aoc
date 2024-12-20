@@ -71,23 +71,25 @@ def fread_all(file_path: str) -> list[str]:
         return file_in.readlines()
 
 
-def tuple_sum(self,a: tuple, b: tuple):
+def tuple_sum(self, a: tuple, b: tuple):
     return tuple(sum(x) for x in zip(a, b))
 
-def is_valid(point: tuple, rows:int, cols: int) -> bool:
+
+def is_valid(point: tuple, rows: int, cols: int) -> bool:
     """Checks for OOB"""
     row, col = point
     if 0 <= row < rows and 0 <= col < cols:
         return True
 
+
 def find_moves(point, value, board):
-    rows,cols = len(board), len(board[0])
+    rows, cols = len(board), len(board[0])
     moves = []
     row, col = point
-    up = row, col-1
-    down = row, col+1
-    left = row-1, col
-    right = row+1, col
+    up = row, col - 1
+    down = row, col + 1
+    left = row - 1, col
+    right = row + 1, col
     directions = [up, down, left, right]
     for direction in directions:
         new_row, new_col = direction
@@ -96,18 +98,19 @@ def find_moves(point, value, board):
                 moves.append((new_row, new_col))
     return moves
 
+
 def do_it(point, board, index=0, path=None):
-        rows,cols = len(board), len(board[0])
-        found_paths= 0 
-        if path is None:
-            path = []
-        path.append(point)
-        if index >= 8:
-            return found_paths
-        str_index = str(index)
-        moves = find_moves(point, str_index, board)
-        for move in moves:
-            if is_valid(move, rows, cols):
-                print(index)
-                found_paths += do_it(move,board,index+1,path=path)
+    rows, cols = len(board), len(board[0])
+    found_paths = 0
+    if path is None:
+        path = []
+    path.append(point)
+    if index >= 8:
         return found_paths
+    str_index = str(index)
+    moves = find_moves(point, str_index, board)
+    for move in moves:
+        if is_valid(move, rows, cols):
+            print(index)
+            found_paths += do_it(move, board, index + 1, path=path)
+    return found_paths

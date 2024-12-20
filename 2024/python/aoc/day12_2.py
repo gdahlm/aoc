@@ -1,11 +1,12 @@
 """AoC 2024 Day12 Task 1"""
+
 from collections import deque
 
 masks = [
     ((0, -1), (-1, 0), (-1, -1)),  # L U L+U
     ((-1, 0), (0, 1), (-1, 1)),  # U R U+R
     ((1, 0), (0, 1), (1, 1)),  # D R D+R
-    ((1, 0), (0, -1), (1, -1)), # D L D+L
+    ((1, 0), (0, -1), (1, -1)),  # D L D+L
 ]
 
 
@@ -85,7 +86,7 @@ def flood(board: list[str]):
                 if point not in visited:
                     fill(point)
 
-    def get_area(point: tuple | None=None) -> int:
+    def get_area(point: tuple | None = None) -> int:
         area = 0
         if point is None:
             points = clusters

@@ -61,7 +61,7 @@ def fread_all(file_path: str) -> list[str]:
         return file_in.readlines()
 
 
-def find_frontier(board: list[str], directions: str | None=None) -> list[tuple]:
+def find_frontier(board: list[str], directions: str | None = None) -> list[tuple]:
     """Return points of the frontier of a point"""
     # Closure: foo = frontier(board)
     # foo((1,1), ['N']) -> [(0, 1)]
@@ -84,7 +84,7 @@ def find_frontier(board: list[str], directions: str | None=None) -> list[tuple]:
             return True
         return False
 
-    def points(point:tuple, directions: str=directions) -> list[tuple]:
+    def points(point: tuple, directions: str = directions) -> list[tuple]:
         """Main function"""
         r, c = point
         res = set()
@@ -107,7 +107,7 @@ def find_trailheads(board: list) -> list[tuple]:
     return res
 
 
-def find_next_move(point: tuple, board: list[str], visited: set[tuple]| None=None):
+def find_next_move(point: tuple, board: list[str], visited: set[tuple] | None = None):
     # Closures
     frontier = find_frontier(board)
     if visited is None:
@@ -122,12 +122,11 @@ def find_next_move(point: tuple, board: list[str], visited: set[tuple]| None=Non
         if board[r][c] + 1 == board[new_r][new_c]:
             _ = find_next_move(move, board, visited)
 
-
     return res
 
 
-def find_hiking_trails(board: list[str], visited: set[tuple]| None=None):
-    #rows, cols = len(board), len(board[0])
+def find_hiking_trails(board: list[str], visited: set[tuple] | None = None):
+    # rows, cols = len(board), len(board[0])
     if visited is None:
         visited = set()
     res = []
@@ -143,12 +142,13 @@ def find_hiking_trails(board: list[str], visited: set[tuple]| None=None):
 
 def main() -> None:
     """Main function"""
-    #TODO fake mocked up
+    # TODO fake mocked up
     res = []
     board = fread_all("data/test/10.txt")
     _ = find_hiking_trails(board)
 
     return res
+
 
 if __name__ == "__main__":
     main()

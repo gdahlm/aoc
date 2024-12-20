@@ -1,21 +1,14 @@
 """AoC day 2 tasks 1 and 2"""
 
-import sys
 
-
-def open_file(fname):
-    """Returns a file handle"""
-    try:
-        fhand = open(fname, "r", encoding="utf-8")
-    except IOError:  # pragma: no cover
-        sys.exit()
-    return fhand
-
+def open_file(file_name: str) -> list[str]:
+    with open(file_name, "r", encoding="utf-8") as file_in:
+        return list(file_in)
 
 def read_file(fname):
     """Returns a generator to read file line by line"""
-    fhand = open_file(fname)
-    for content in fhand:
+    raw_data = open_file(fname)
+    for content in raw_data:
         if any(element.isdigit() for element in content):
             seq = [int(x) for x in content.split()]
             yield seq

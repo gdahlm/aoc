@@ -50,12 +50,13 @@ small_input_sorting_steps = [
 ]
 
 t2_sorting = [
-'00...111...2...333.44.5555.6666.777.888899',
-'0099.111...2...333.44.5555.6666.777.8888..',
-'0099.1117772...333.44.5555.6666.....8888..',
-'0099.111777244.333....5555.6666.....8888..',
-'00992111777.44.333....5555.6666.....8888..',
+    "00...111...2...333.44.5555.6666.777.888899",
+    "0099.111...2...333.44.5555.6666.777.8888..",
+    "0099.1117772...333.44.5555.6666.....8888..",
+    "0099.111777244.333....5555.6666.....8888..",
+    "00992111777.44.333....5555.6666.....8888..",
 ]
+
 
 def fread_all(file_path: str) -> list[str]:
     """Return all lines from a file at once"""
@@ -87,6 +88,7 @@ def expand_disk(string: str) -> str:
 
     return sentence.getvalue()
 
+
 def expand_disk_csv(string: str) -> str:
     sentence = StringIO()
     blocks = string[::2]
@@ -109,13 +111,14 @@ def expand_disk_csv(string: str) -> str:
         b_out_list = []
         for _ in range(b_count):
             b_out_list.append(str(b_value))
-            b_out_list.append(',')
+            b_out_list.append(",")
 
-        b_out= ''.join(b_out_list)
+        b_out = "".join(b_out_list)
 
         sentence.write(b_out + f_out)
 
     return sentence.getvalue()
+
 
 def calculate_checksum(string: str) -> int:
     res = 0
@@ -124,12 +127,13 @@ def calculate_checksum(string: str) -> int:
             res += int(item) * index
     return res
 
+
 def calculate_checksum_csv(string: str) -> int:
     res = 0
-    array = string.split(',')
-    array = [x for x in array if x !='.' and x != '']
+    array = string.split(",")
+    array = [x for x in array if x != "." and x != ""]
     for index, item in enumerate(array):
-        if item != "." or item != '':
+        if item != "." or item != "":
             res += int(item) * index
     return res
 
@@ -155,14 +159,15 @@ def sort_disk(string: str) -> str:  # pylint: disable=unused-argument
             array[index], array[match_index] = match_val, "."
     return "".join(array)
 
+
 def sort_disk_csv(csv_string: str) -> str:  # pylint: disable=unused-argument
     # TODO
-    array = csv_string.split(',')
+    array = csv_string.split(",")
     free_matches = []
     num_matches = []
 
     for index, value in enumerate(array):
-        if value == '.':
+        if value == ".":
             free_matches.append(index)
         if value.isnumeric():
             num_matches.append(index)
@@ -175,13 +180,14 @@ def sort_disk_csv(csv_string: str) -> str:  # pylint: disable=unused-argument
         array[index], array[num_match] = match_val, "."
     return ",".join(array)
 
+
 def sort_disk_csv_first_fit(csv_string: str) -> str:  # pylint: disable=unused-argument
     # TODO
-    array = csv_string.split(',')
+    array = csv_string.split(",")
     num_matches = {}
 
     for index, value in enumerate(array):
-        if value == '.':
+        if value == ".":
             pass
         if value.isnumeric():
             if value not in num_matches:
@@ -189,9 +195,10 @@ def sort_disk_csv_first_fit(csv_string: str) -> str:  # pylint: disable=unused-a
 
             num_matches[value].add(index)
 
-    #for index in num_matches[::-1]:
+    # for index in num_matches[::-1]:
 
     return num_matches
+
 
 def do_it(filename):
     data = fread_all(filename)
@@ -200,6 +207,7 @@ def do_it(filename):
     data_csv_sorted = sort_disk_csv(data_csv)
     checksum = calculate_checksum_csv(data_csv_sorted)
     return checksum
+
 
 def first_fit(size: int, string: str):
     free_pattern = re.compile(r"(\.+)")
@@ -210,7 +218,8 @@ def first_fit(size: int, string: str):
             return start
     return False
 
-def first_fit_arr(size: int, array: str, free_char='.'):
+
+def first_fit_arr(size: int, array: str, free_char="."):
     res = None
     free_char = set(free_char)
     length = len(array)
@@ -218,7 +227,7 @@ def first_fit_arr(size: int, array: str, free_char='.'):
         if array[index] not in free_char:
             continue
 
-        found_chars = set(''.join(array[index: index + size]))
+        found_chars = set("".join(array[index : index + size]))
         if found_chars.issubset(free_char):
             return index
 
@@ -228,6 +237,7 @@ def first_fit_arr(size: int, array: str, free_char='.'):
 def main() -> None:
     """Main function"""
     raise NotImplementedError
+
 
 if __name__ == "__main__":
     main()

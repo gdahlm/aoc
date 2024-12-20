@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 
 # Constents
 test_start = (13, 1)
-test_end = (1, 13) 
+test_end = (1, 13)
 test_map = [
     "###############",
     "#.......#....E#",

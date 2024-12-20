@@ -9,10 +9,13 @@ Given x and y are unknows, and ad - bc != 0:
 
 x = (de-bf)/(ad-bc), y = (af-ce)/(ad-bc)
 """
+
+
 def fread_line(file_path: str):
     """Lazy read of file returning a generator"""
     with open(file_path, "r", encoding="utf-8") as file_in:
         yield from file_in
+
 
 def parse_input(finput):
     res = []
@@ -37,9 +40,13 @@ def try_game(data, offset):
     yp += offset
     # Cramer's Rule: AX=B
     # determinant = (x2 * y1 - x1 * y2)
-    B = (y1 * xp - x1 * yp) / (x2 * y1 - x1 * y2) # pylint: disable=invalid-name #(it's math!!!!)
+    B = (y1 * xp - x1 * yp) / (
+        x2 * y1 - x1 * y2
+    )  # pylint: disable=invalid-name #(it's math!!!!)
     if B.is_integer():
-        A = (xp - B * x2) / x1 # pylint: disable=invalid-name #(I know, won't do it again)
+        A = (
+            xp - B * x2
+        ) / x1  # pylint: disable=invalid-name #(I know, won't do it again)
         if A.is_integer():
             return data, int(A), int(B)
 
@@ -58,10 +65,13 @@ def main(fname: str | None = None) -> None:
 
     for offset in offsets:
         res = 0
-        for _, a, b in filter(bool, map(lambda x: try_game(x, offset), data)): # pylint: disable=W0640
+        for _, a, b in filter(
+            bool, map(lambda x: try_game(x, offset), data)
+        ):  # pylint: disable=W0640
             res += a * a_pmult + b * b_pmult
         solution.append(res)
     return solution
+
 
 if __name__ == "__main__":
     print(main("data/test/13.txt"))
