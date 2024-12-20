@@ -39,7 +39,7 @@ def find_shortest_path(maze, start, end):
 def make_map(width, read_bytes, moves):
     board = []
     for row in range(width):
-        board.append(list('.' * width))
+        board.append(list("." * width))
     for index in range(read_bytes):
         items = moves[index].split(",")
         col, row = int(items[0]), int(items[1])

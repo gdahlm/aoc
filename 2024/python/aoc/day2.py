@@ -5,6 +5,7 @@ def open_file(file_name: str) -> list[str]:
     with open(file_name, "r", encoding="utf-8") as file_in:
         return list(file_in)
 
+
 def read_file(fname):
     """Returns a generator to read file line by line"""
     raw_data = open_file(fname)

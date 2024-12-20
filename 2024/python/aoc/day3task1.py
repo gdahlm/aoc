@@ -2,9 +2,11 @@
 
 import re
 
+
 def open_file(file_name: str) -> list[str]:
     with open(file_name, "r", encoding="utf-8") as file_in:
         return list(file_in)
+
 
 def find_matches(line):
     """Matches the pattern mul(n,n) with len(n) <= 3"""

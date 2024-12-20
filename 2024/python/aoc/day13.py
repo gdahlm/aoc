@@ -4,11 +4,13 @@ Cramer's Rule
 
 ax + by = e
 cx + dy = f
-    
+
 Given x and y are unknows, and ad - bc != 0:
 
 x = (de-bf)/(ad-bc), y = (af-ce)/(ad-bc)
 """
+
+# pylint: disable=invalid-name
 
 
 def fread_line(file_path: str):
