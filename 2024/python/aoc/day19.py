@@ -9,7 +9,7 @@ def read_file(file_name: str) -> list[str]:
         return [line.strip() for line in file_in]
 
 
-def clean_data(filename: str):
+def clean_data(filename: str) -> tuple[list[str], list[str]]:
     raw_input = read_file(filename)
     towels = raw_input[0].split(", ")
 
@@ -21,8 +21,10 @@ def clean_data(filename: str):
 
 
 def can_construct(pattern: str, towels: list[str], memo=None) -> bool:
+    """Memoized test if substrings can construct a target string"""
     if memo is None:
         memo = {}
+    # Memo Case
     if pattern in memo:
         return memo[pattern]
     # Base Case
@@ -41,9 +43,11 @@ def can_construct(pattern: str, towels: list[str], memo=None) -> bool:
 
 
 def count_construct(pattern: str, towels: list[str], memo=None) -> int:
+    """Memoized count of the number of ways substrings can construct a target string"""
     total = 0
     if memo is None:
         memo = {}
+    # Memo Case
     if pattern in memo:
         return memo[pattern]
     # Base Case
@@ -56,11 +60,12 @@ def count_construct(pattern: str, towels: list[str], memo=None) -> int:
             number_matches = count_construct(suffix, towels, memo)
             total += number_matches
             memo[suffix] = number_matches
+
     memo[pattern] = total
     return total
 
 
-def solution(filename):
+def solution(filename: str) -> tuple[int, int]:
     towels, patterns = clean_data(filename)
     task1, task2 = 0, 0
     # Task 1
