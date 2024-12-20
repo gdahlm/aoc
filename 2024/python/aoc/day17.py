@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 
-# pylint: disable=E0606,E0601
+# pylint: disable=E0606,E0601,W0105
 
 
 def read_file(file_name: str) -> list[str]:
@@ -115,11 +115,13 @@ if __name__ == "__main__":
     # Part 1
     input_program, a, b, c = clean_data("data/input/17.txt")
     print(run_program(input_program, int(a), int(b), int(c)))
-
-    # Part 2
-    # I cannot figure out a way to code this without giving away the input.
-    # But this is all one needs to udnerstand to solve it.
     """
+    Part 2
+    ~~~~~~
+
+    I cannot figure out a clear way to code this without giving away the input.
+    But this is all one needs to udnerstand to solve it.
+
     oct(A): 0o36414027 mod8:7
     oct(A): 0o3641402 mod8:2
     oct(A): 0o364140 mod8:0
